@@ -1,10 +1,9 @@
 import o from "obsidian";
-import { globalState } from "./global-state";
-import { getSettings } from "./settings";
 import { showLockScreen } from "./show-lock-screen";
+import { getSettings } from "./settings/init-settings";
 
 const showLockScreenOnWindowBlur = (plugin: o.Plugin) => {
-	let timeout: NodeJS.Timeout;
+	let timeout: number;
 	const ms = getSettings().timeoutWindowBlur;
 
 	plugin.registerDomEvent(window, "blur", () => {
@@ -44,8 +43,7 @@ const showLockScreenWhenInteractionStops = (plugin: o.Plugin) => {
 	}
 };
 
-export const showLockScreenWhenBackgrounded = () => {
-	const { plugin } = globalState;
+export const showLockScreenWhenBackgrounded = (plugin: o.Plugin) => {
 	if (o.Platform.isDesktopApp) {
 		showLockScreenOnWindowBlur(plugin);
 	} else {

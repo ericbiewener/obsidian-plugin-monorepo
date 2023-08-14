@@ -1,10 +1,10 @@
-import { globalState } from "./global-state";
 import { showLockScreen } from "./show-lock-screen";
+import o from "obsidian";
 
-export const addShowLockScreenCommand = () => {
-	globalState.plugin.addCommand({
+export const addShowLockScreenCommand = (plugin: o.Plugin) => {
+	plugin.addCommand({
 		id: "lock-screen",
 		name: "Lock screen",
-		callback: showLockScreen,
+		callback: () => showLockScreen(plugin),
 	});
 };

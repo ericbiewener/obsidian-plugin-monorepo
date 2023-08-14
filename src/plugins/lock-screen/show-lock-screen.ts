@@ -1,19 +1,18 @@
 import o from "obsidian";
-import { domService } from "./dom-service";
-import { globalState } from "./global-state";
-import { getSettings } from "./settings";
+import { getSettings } from "./settings/init-settings";
+import { domService } from "../../dom-service";
 
 let isVisible = false;
 
-const hideLockScreen = (container: HTMLElement) => {
+const hideLockScreen = (plugin: o.Plugin, container: HTMLElement) => {
 	container.remove();
 	isVisible = false;
-	globalState.plugin.app.workspace
+	plugin.app.workspace
 		.getActiveViewOfType(o.MarkdownView)
 		?.editor.focus();
 };
 
-const showNoPasswordMsg = (container: HTMLElement) => {
+const showNoPasswordMsg = (plugin: o.Plugin, container: HTMLElement) => {
 	const msg = container.createEl("div");
 	Object.assign(msg.style, {
 		fontSize: "2rem",
@@ -32,11 +31,11 @@ const showNoPasswordMsg = (container: HTMLElement) => {
 	} as CSSStyleDeclaration);
 	okBtn.innerText = "Ok";
 	okBtn.addEventListener("click", () => {
-		hideLockScreen(container);
+		hideLockScreen(plugin, container);
 	});
 };
 
-const showPasswordField = (container: HTMLElement) => {
+const showPasswordField = (plugin: o.Plugin, container: HTMLElement) => {
 	const settings = getSettings();
 
 	const checkPassword = (showError: boolean) => (e: Event) => {
@@ -53,7 +52,7 @@ const showPasswordField = (container: HTMLElement) => {
 			}
 			return;
 		}
-		hideLockScreen(container);
+		hideLockScreen(plugin, container);
 	};
 
 	const form = container.createEl("form");
@@ -88,7 +87,7 @@ const showPasswordField = (container: HTMLElement) => {
 	input.focus();
 };
 
-export const showLockScreen = () => {
+export const showLockScreen = (plugin: o.Plugin) => {
 	if (isVisible) return;
 	isVisible = true;
 
@@ -112,8 +111,8 @@ export const showLockScreen = () => {
 	} as CSSStyleDeclaration);
 
 	if (settings.password) {
-		showPasswordField(container);
+		showPasswordField(plugin, container);
 	} else {
-		showNoPasswordMsg(container);
+		showNoPasswordMsg(plugin, container);
 	}
 };

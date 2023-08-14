@@ -5,6 +5,7 @@
   },
   "scripts": {
     "start": "webpack --watch --env",
+		"tc": "tsc --noEmit --watch",
     "build": "rm -rf dist && tsc -noEmit -skipLibCheck && NODE_ENV=production node esbuild.config.mjs",
     "format": "prettier --write --no-error-on-unmatched-pattern **/*.{ts,js,json,md}, *.{ts,js,json,md}",
     "prepare": "husky install"

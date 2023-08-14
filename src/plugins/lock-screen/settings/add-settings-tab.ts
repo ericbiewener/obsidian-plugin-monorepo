@@ -1,7 +1,6 @@
 import o from "obsidian";
-import { globalState } from "../global-state";
-import { createSettingsTab } from "./create-settings-tab";
 import { getSettings } from "./init-settings";
+import { createSettingsTab } from "../../../create-settings-tab";
 
 const cleanNumericVal = (text: o.TextComponent, value: string) => {
 	const parsedVal = parseInt(value, 10) || 0;
@@ -9,9 +8,8 @@ const cleanNumericVal = (text: o.TextComponent, value: string) => {
 	return parsedVal;
 };
 
-export const addSettingsTab = () => {
+export const addSettingsTab = (plugin: o.Plugin) => {
 	const settings = getSettings();
-	const { plugin } = globalState;
 
 	plugin.addSettingTab(
 		createSettingsTab(plugin, ({ containerEl }) => {
