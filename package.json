@@ -5,6 +5,7 @@
   },
   "scripts": {
     "start": "webpack --watch --env",
+    "tc": "tsc --noEmit --watch",
     "build": "rm -rf dist && tsc -noEmit -skipLibCheck && NODE_ENV=production node esbuild.config.mjs",
     "format": "prettier --write --no-error-on-unmatched-pattern **/*.{ts,js,json,md}, *.{ts,js,json,md}",
     "prepare": "husky install"
@@ -33,6 +34,7 @@
     "open": "9.1.0",
     "prettier": "3.0.1",
     "prettier-plugin-organize-imports": "3.2.3",
+    "terser-webpack-plugin": "5.3.9",
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tslib": "2.6.1",
@@ -46,6 +48,8 @@
   },
   "dependencies": {
     "@codemirror/state": "6.2.1",
-    "@codemirror/view": "6.16.0"
+    "@codemirror/view": "6.16.0",
+    "date-fns": "2.30.0",
+    "param-case": "3.0.4"
   }
 }

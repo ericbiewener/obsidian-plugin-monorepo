@@ -1,24 +1,23 @@
-import o from "obsidian";
-import { domService } from "./dom-service";
-import { globalState } from "./global-state";
-import { addSettingsTab, initSettings } from "./settings";
+import * as o from "obsidian";
 import { showLockScreen } from "./show-lock-screen";
 import { addShowLockScreenCommand } from "./show-lock-screen-command";
 import { showLockScreenWhenBackgrounded } from "./show-lock-screen-event-listeners";
+import { domService } from "../../dom-service";
+import { initSettings } from "./settings/init-settings";
+import { addSettingsTab } from "./settings/add-settings-tab";
 
-export default class MyPlugin extends o.Plugin {
-	async onload() {
-		globalState.plugin = this;
-		await initSettings();
-		showLockScreen();
-		addSettingsTab();
-		addShowLockScreenCommand();
-		showLockScreenWhenBackgrounded();
+export default class LockScreenPlugin extends o.Plugin {
+  async onload() {
+    await initSettings(this);
+    showLockScreen(this);
+    addSettingsTab(this);
+    addShowLockScreenCommand(this);
+    showLockScreenWhenBackgrounded(this);
 
-		this.app.workspace.getActiveViewOfType(o.MarkdownView)?.editor.focus();
-	}
+    this.app.workspace.getActiveViewOfType(o.MarkdownView)?.editor.focus();
+  }
 
-	async onunload() {
-		domService.cleanUp();
-	}
+  async onunload() {
+    domService.cleanUp();
+  }
 }

@@ -1,10 +1,7 @@
-import { globalState } from "./global-state";
 import { showLockScreen } from "./show-lock-screen";
+import { addCommand } from "../../add-command";
 
-export const addShowLockScreenCommand = () => {
-	globalState.plugin.addCommand({
-		id: "lock-screen",
-		name: "Lock screen",
-		callback: showLockScreen,
-	});
-};
+export const addShowLockScreenCommand = addCommand(
+  "Lock screen",
+  showLockScreen,
+);
