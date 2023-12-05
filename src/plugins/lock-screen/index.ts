@@ -1,4 +1,4 @@
-import o from "obsidian";
+import * as o from "obsidian";
 import { showLockScreen } from "./show-lock-screen";
 import { addShowLockScreenCommand } from "./show-lock-screen-command";
 import { showLockScreenWhenBackgrounded } from "./show-lock-screen-event-listeners";

@@ -1,4 +1,4 @@
-import o from "obsidian";
+import * as o from "obsidian";
 
 const settings = {
   password: "",

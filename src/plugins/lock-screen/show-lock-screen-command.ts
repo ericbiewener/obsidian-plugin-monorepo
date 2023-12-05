@@ -1,10 +1,7 @@
 import { showLockScreen } from "./show-lock-screen";
-import o from "obsidian";
+import { addCommand } from "../../add-command";
 
-export const addShowLockScreenCommand = (plugin: o.Plugin) => {
-	plugin.addCommand({
-		id: "lock-screen",
-		name: "Lock screen",
-		callback: () => showLockScreen(plugin),
-	});
-};
+export const addShowLockScreenCommand = addCommand(
+  "Lock screen",
+  showLockScreen,
+);
