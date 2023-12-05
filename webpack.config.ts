@@ -43,7 +43,7 @@ export default async (env: Env): Promise<Configuration> => {
       obsidian: "commonjs2 obsidian",
     },
     resolve: {
-      extensions: [".ts"],
+      extensions: [".ts", ".js"],
     },
     module: {
       rules: [
@@ -68,16 +68,18 @@ export default async (env: Env): Promise<Configuration> => {
         },
       },
     ],
-    devtool: isProd ? "none" : "source-map",
+    devtool: isProd ? false : "source-map",
     optimization: {
       minimize: isProd,
-      minimizer: [
-        new TerserPlugin({
-          extractComments: false,
-          minify: TerserPlugin.uglifyJsMinify,
-          terserOptions: {},
-        }),
-      ],
+      minimizer: isProd
+        ? [
+            new TerserPlugin({
+              extractComments: false,
+              minify: TerserPlugin.uglifyJsMinify,
+              terserOptions: {},
+            }),
+          ]
+        : [],
     },
   };
 };
