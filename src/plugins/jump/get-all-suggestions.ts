@@ -33,6 +33,7 @@ export const getSuggestionsForFile = (app: o.App, file: o.TFile) => {
         label: createLabel(file, hierarchy),
         heading: heading,
         file,
+        hierarchy: [...hierarchy],
       };
     }) || []
   );

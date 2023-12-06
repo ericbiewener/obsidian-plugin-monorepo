@@ -1,11 +1,10 @@
 import * as o from "obsidian";
 type Pos = { line: number; col: number };
 
-export const goToFileLocation = (
+export const goToFileLocation = async (
   app: o.App,
   file: o.TFile,
   start: Pos,
-  end?: Pos,
 ) => {
   const eState = {
     active: true,
@@ -14,5 +13,5 @@ export const goToFileLocation = (
   };
 
   const leaf = app.workspace.getLeaf(false);
-  leaf.openFile(file, { active: true, eState });
+  await leaf.openFile(file, { active: true, eState });
 };
