@@ -1,5 +1,6 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
+import { getEditor } from "../../../utils/obsidian/editor/get-editor";
 
 const leadingWhitespace = /^(\s*)/;
 const unorderedListItem = /^(\s*)-( .*)/;
@@ -42,8 +43,7 @@ const makeOrdered = (editor: o.Editor, line: string, lineNo: number) => {
 };
 
 const toggleListType = async ({ app }: o.Plugin, line = 0) => {
-  const editor = app.workspace.getActiveViewOfType(o.MarkdownView)?.editor;
-
+  const editor = getEditor(app);
   const startLine = editor.getCursor("from").line;
   const toLine = editor.getCursor("to").line;
 
