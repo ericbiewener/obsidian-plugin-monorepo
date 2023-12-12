@@ -2,7 +2,9 @@ import * as o from "obsidian";
 
 declare module "obsidian" {
   export interface App {
-    commands: any;
+    commands: {
+      executeCommandById: (id: string) => boolean;
+    };
   }
 
   export type PluginInstance = {
