@@ -2,20 +2,28 @@ import * as o from "obsidian";
 import { HeadingSuggestion } from "./types";
 import { last } from "../../../utils/collections/last";
 import { findLastIndex } from "../../../utils/collections/find-last";
-import { HIEARCHY_SEPARATOR } from "./constants";
+import { getFile } from "../../../utils/obsidian/vault/get-file";
 
-const createLabel = (file: o.TFile, hierarchy: o.HeadingCache[]) =>
-  [file.basename, ...hierarchy.map((h) => h.heading)].join(HIEARCHY_SEPARATOR);
+export type CreateLabel = (
+  file: o.TFile,
+  hierarchy: o.HeadingCache[],
+  heading: o.HeadingCache,
+) => string;
 
-export const getSuggestionsForFilename = (app: o.App, filename: string) => {
-  const file = app.vault.getFiles().find((f) => {
-    console.log(f);
-    return f.name === filename;
-  });
-  return file ? getSuggestionsForFile(app, file) : [];
+export const getSuggestionsForFilename = (
+  app: o.App,
+  filename: string,
+  createLabel: CreateLabel,
+) => {
+  const file = getFile(app, filename);
+  return file ? getSuggestionsForFile(app, file, createLabel) : [];
 };
 
-export const getSuggestionsForFile = (app: o.App, file: o.TFile) => {
+export const getSuggestionsForFile = (
+  app: o.App,
+  file: o.TFile,
+  createLabel: CreateLabel,
+): HeadingSuggestion[] => {
   const metadata = app.metadataCache.getFileCache(file);
   const hierarchy: o.HeadingCache[] = [];
 
@@ -30,7 +38,7 @@ export const getSuggestionsForFile = (app: o.App, file: o.TFile) => {
       }
 
       return {
-        label: createLabel(file, hierarchy),
+        label: createLabel(file, hierarchy, heading),
         heading: heading,
         file,
         hierarchy: [...hierarchy],
@@ -39,5 +47,10 @@ export const getSuggestionsForFile = (app: o.App, file: o.TFile) => {
   );
 };
 
-export const getAllSuggestions = (app: o.App): HeadingSuggestion[] =>
-  app.vault.getFiles().flatMap((file) => getSuggestionsForFile(app, file));
+export const getAllSuggestions = (
+  app: o.App,
+  createLabel: CreateLabel,
+): HeadingSuggestion[] =>
+  app.vault
+    .getFiles()
+    .flatMap((file) => getSuggestionsForFile(app, file, createLabel));

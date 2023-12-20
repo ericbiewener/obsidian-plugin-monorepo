@@ -11,6 +11,7 @@ import { OMNI_FILENAME, OMNI_PREFIX } from "./constants";
 import { getCoreQuickSwitcherClass } from "../../../utils/obsidian/get-core-quick-switcher";
 import { goToHeadingSuggestion } from "./go-to-heading-suggestion";
 import { renderHeadingSuggestion } from "./render-heading-suggestion";
+import { createBreadcrumbLabel } from "./create-breadcrumb-label";
 
 const navigate =
   (omniOnly: boolean) =>
@@ -19,8 +20,8 @@ const navigate =
     // as system options are evaluated in the modal constructor
     const SystemSwitcherModal = getCoreQuickSwitcherClass(app);
     const allSuggestions = omniOnly
-      ? getSuggestionsForFilename(app, OMNI_FILENAME)
-      : getAllSuggestions(app);
+      ? getSuggestionsForFilename(app, OMNI_FILENAME, createBreadcrumbLabel)
+      : getAllSuggestions(app, createBreadcrumbLabel);
 
     const firstHeaderSuggestions = allSuggestions.filter(
       (s) => s.heading.level === 1,

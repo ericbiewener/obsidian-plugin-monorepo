@@ -7,6 +7,7 @@ import {
   addNavigateToOmniHeadingCmd,
   addNavigateToHeadingCmd,
 } from "./navigate-to-heading";
+import { addJumpToOutlineCmd } from "./jump-to-outline";
 
 export default class JumpPlugin extends o.Plugin {
   async onload() {
@@ -15,6 +16,7 @@ export default class JumpPlugin extends o.Plugin {
     addJumpToOmniHeadingCmd(this);
     addNavigateToHeadingCmd(this);
     addNavigateToOmniHeadingCmd(this);
+    addJumpToOutlineCmd(this);
   }
 
   async onunload() {}
