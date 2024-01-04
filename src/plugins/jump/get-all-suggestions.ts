@@ -1,8 +1,8 @@
 import * as o from "obsidian";
-import { HeadingSuggestion } from "./types";
-import { last } from "../../../utils/collections/last";
 import { findLastIndex } from "../../../utils/collections/find-last";
+import { last } from "../../../utils/collections/last";
 import { getFile } from "../../../utils/obsidian/vault/get-file";
+import { HeadingSuggestion } from "./types";
 
 export type CreateLabel = (
   file: o.TFile,
@@ -24,11 +24,11 @@ export const getSuggestionsForFile = (
   file: o.TFile,
   createLabel: CreateLabel,
 ): HeadingSuggestion[] => {
-  const metadata = app.metadataCache.getFileCache(file);
+  const { headings } = app.metadataCache.getFileCache(file);
   const hierarchy: o.HeadingCache[] = [];
 
   return (
-    metadata.headings?.map((heading) => {
+    headings?.map((heading) => {
       const current = last(hierarchy);
       if (!current) {
         hierarchy.push(heading);
