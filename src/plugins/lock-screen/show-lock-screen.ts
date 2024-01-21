@@ -1,10 +1,13 @@
 import * as o from "obsidian";
-import { getSettings } from "./settings/init-settings";
 import { domService } from "../../dom-service";
+import { getSettings } from "./settings/init-settings";
+import { showPatternSensor } from "./show-pattern-sensor";
 
 let isVisible = false;
 
-const hideLockScreen = (plugin: o.Plugin, container: HTMLElement) => {
+export type HideLockScreen = (plugin: o.Plugin, container: HTMLElement) => void;
+
+const hideLockScreen: HideLockScreen = (plugin, container) => {
   container.remove();
   isVisible = false;
   plugin.app.workspace.getActiveViewOfType(o.MarkdownView)?.editor.focus();
@@ -109,7 +112,11 @@ export const showLockScreen = (plugin: o.Plugin) => {
   } as CSSStyleDeclaration);
 
   if (settings.password) {
-    showPasswordField(plugin, container);
+    if (o.Platform.isMobileApp) {
+      showPatternSensor(plugin, container, hideLockScreen);
+    } else {
+      showPasswordField(plugin, container);
+    }
   } else {
     showNoPasswordMsg(plugin, container);
   }
