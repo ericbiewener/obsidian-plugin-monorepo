@@ -1,33 +1,37 @@
-import path from "path";
-import { Configuration, Compiler } from "webpack";
-import fse from "fs-extra";
 import assert from "assert";
+import fse from "fs-extra";
 import os from "os";
-import globby from "globby";
+import path from "path";
 import TerserPlugin from "terser-webpack-plugin";
+import { Compiler, Configuration } from "webpack";
 
 const isProd = process.env.NODE_ENV === "production";
-const pluginSrc = path.join(__dirname, "src/plugins");
 
-type Env = {
-  "lock-screen"?: boolean;
+const paths = {
+  pluginSrc: path.join(__dirname, "src/plugins"),
+  vaults: {
+    personal: path.join(os.homedir(), "Repos/Personal/personal-notes"),
+    private: path.join(os.homedir(), "Repos/Personal/personal-notes-private"),
+    work: path.join(
+      os.homedir(),
+      "Library/CloudStorage/OneDrive-WalmartInc/Notes",
+    ),
+  },
 };
 
+const plugins = ["grab-bag", "jump", "lock-screen", "templater"] as const;
+type Plugin = (typeof plugins)[number];
+type Env = Partial<Record<Plugin, boolean>>;
+
 const getPlugin = async (env: Env) => {
-  const pluginDirs = await globby(path.join(pluginSrc, "*"), {
-    onlyDirectories: true,
-    expandDirectories: false,
-  });
-  const plugins = pluginDirs.map((p) => path.basename(p));
-  console.info(`:: available plugins`, plugins);
-  const plugin = Object.keys(env).find((p) => plugins.includes(p));
+  const plugin = plugins.find((p) => env[p]);
   assert(plugin);
   return plugin;
 };
 
 export default async (env: Env): Promise<Configuration> => {
   const plugin = await getPlugin(env);
-  const src = path.join(pluginSrc, plugin);
+  const src = path.join(paths.pluginSrc, plugin);
   const dist = path.join(__dirname, "dist", plugin);
 
   return {
@@ -108,19 +112,21 @@ export default async (env: Env): Promise<Configuration> => {
 
 const MANIFEST_FILE = "manifest.json";
 
-const noteDirs = [
-  path.join(os.homedir(), "Repos/Personal/personal-notes"),
-  path.join(os.homedir(), "Repos/Personal/personal-notes-private"),
-  path.join(os.homedir(), "Library/CloudStorage/OneDrive-WalmartInc/Notes"),
-];
+const pluginToVault: Record<Plugin, string[]> = {
+  "lock-screen": [paths.vaults.private],
+  "grab-bag": [paths.vaults.personal, paths.vaults.private, paths.vaults.work],
+  jump: [paths.vaults.work],
+  templater: [paths.vaults.work],
+};
 
-const postBuild = (plugin: string, src: string, dist: string) => async () => {
+const postBuild = (plugin: Plugin, src: string, dist: string) => async () => {
   await fse.copyFile(
     path.join(src, MANIFEST_FILE),
     path.join(dist, MANIFEST_FILE),
   );
 
-  for (const dir of noteDirs) {
+  const vaultPaths = pluginToVault[plugin];
+  for (const dir of vaultPaths) {
     await fse.copy(dist, path.join(dir, ".obsidian/plugins", plugin));
   }
 
