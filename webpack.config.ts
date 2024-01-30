@@ -11,6 +11,7 @@ const paths = {
   pluginSrc: path.join(__dirname, "src/plugins"),
   vaults: {
     personal: path.join(os.homedir(), "Repos/Personal/personal-notes"),
+    test: path.join(os.homedir(), "Repos/Personal/obsidian-vault-testing"),
     private: path.join(os.homedir(), "Repos/Personal/personal-notes-private"),
     work: path.join(
       os.homedir(),

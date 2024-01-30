@@ -1,7 +1,6 @@
 import * as o from "obsidian";
 import { domService } from "../../dom-service";
 import { getSettings } from "./settings/init-settings";
-import { showPatternSensor } from "./show-pattern-sensor";
 
 let isVisible = false;
 
@@ -112,11 +111,7 @@ export const showLockScreen = (plugin: o.Plugin) => {
   } as CSSStyleDeclaration);
 
   if (settings.password) {
-    if (o.Platform.isMobileApp) {
-      showPatternSensor(plugin, container, hideLockScreen);
-    } else {
-      showPasswordField(plugin, container);
-    }
+    showPasswordField(plugin, container);
   } else {
     showNoPasswordMsg(plugin, container);
   }

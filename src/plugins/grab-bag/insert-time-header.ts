@@ -1,13 +1,14 @@
 import formatDate from "date-fns/format";
 import * as o from "obsidian";
+import { getEditor } from "../../../utils/obsidian/editor/get-editor";
 import { addCommand } from "../../add-command";
 
 const insertTimeHeader = async ({ app }: o.Plugin, line = 0) => {
   const time = formatDate(new Date(), "h:mm a");
 
-  const editor = app.workspace.getActiveViewOfType(o.MarkdownView)?.editor;
+  const editor = getEditor(app);
 
-  editor.replaceRange(`##### ${time}\n\n\n\n`, { line, ch: 0 });
+  editor.replaceRange(`### ${time}\n\n\n\n`, { line, ch: 0 });
   editor.setCursor({ line: line + 1, ch: 0 });
   editor.scrollTo(0, line);
 };
