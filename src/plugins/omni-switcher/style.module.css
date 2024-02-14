@@ -5,3 +5,7 @@
   additional 4.5px height beyond the SVG and this center align it properly */
   display: flex;
 }
+
+.noResultsMsg {
+  color: var(--color-accent);
+}

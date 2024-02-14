@@ -1,8 +1,12 @@
 .iconButton {
   cursor: pointer;
-  opacity: 0.5;
+  color: var(--color-accent);
+}
 
+.hoverable {
+  cursor: pointer;
+  
   &:hover {
-    opacity: 1;
+    background: var(--background-modifier-hover);
   }
 }
