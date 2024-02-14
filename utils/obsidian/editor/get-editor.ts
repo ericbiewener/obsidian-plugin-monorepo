@@ -1,5 +1,5 @@
-import assert from "assert";
 import * as o from "obsidian";
+import { assert } from "../../assert";
 
 export const getEditor = (app: o.App) => {
   const editor = app.workspace.getActiveViewOfType(o.MarkdownView)?.editor;

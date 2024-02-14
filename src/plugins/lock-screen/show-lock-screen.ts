@@ -1,10 +1,13 @@
 import * as o from "obsidian";
 import { domService } from "../../dom-service";
-import { getSettings } from "./settings/init-settings";
+import LockScreenPlugin from "./index";
 
 let isVisible = false;
 
-export type HideLockScreen = (plugin: o.Plugin, container: HTMLElement) => void;
+export type HideLockScreen = (
+  plugin: LockScreenPlugin,
+  container: HTMLElement,
+) => void;
 
 const hideLockScreen: HideLockScreen = (plugin, container) => {
   container.remove();
@@ -12,7 +15,10 @@ const hideLockScreen: HideLockScreen = (plugin, container) => {
   plugin.app.workspace.getActiveViewOfType(o.MarkdownView)?.editor.focus();
 };
 
-const showNoPasswordMsg = (plugin: o.Plugin, container: HTMLElement) => {
+const showNoPasswordMsg = (
+  plugin: LockScreenPlugin,
+  container: HTMLElement,
+) => {
   const msg = container.createEl("div");
   Object.assign(msg.style, {
     fontSize: "2rem",
@@ -35,14 +41,15 @@ const showNoPasswordMsg = (plugin: o.Plugin, container: HTMLElement) => {
   });
 };
 
-const showPasswordField = (plugin: o.Plugin, container: HTMLElement) => {
-  const settings = getSettings();
-
+const showPasswordField = (
+  plugin: LockScreenPlugin,
+  container: HTMLElement,
+) => {
   const checkPassword = (showError: boolean) => (e: Event) => {
     e.stopPropagation();
     e.preventDefault();
 
-    if (input.value !== settings.password) {
+    if (input.value !== plugin.settings.password) {
       if (showError) {
         const { color } = input.style;
         input.style.color = "#C00";
@@ -83,15 +90,15 @@ const showPasswordField = (plugin: o.Plugin, container: HTMLElement) => {
   });
 
   input.addEventListener("keyup", checkPassword(false));
-  input.addEventListener("blur", () => input.focus());
-  input.focus();
+
+  const focus = () => setTimeout(() => input.focus(), 250);
+  input.addEventListener("blur", focus);
+  focus();
 };
 
-export const showLockScreen = (plugin: o.Plugin) => {
+export const showLockScreen = (plugin: LockScreenPlugin) => {
   if (isVisible) return;
   isVisible = true;
-
-  const settings = getSettings();
 
   const container = domService.createEl(
     document.body,
@@ -110,7 +117,7 @@ export const showLockScreen = (plugin: o.Plugin) => {
     display: "flex",
   } as CSSStyleDeclaration);
 
-  if (settings.password) {
+  if (plugin.settings.password) {
     showPasswordField(plugin, container);
   } else {
     showNoPasswordMsg(plugin, container);

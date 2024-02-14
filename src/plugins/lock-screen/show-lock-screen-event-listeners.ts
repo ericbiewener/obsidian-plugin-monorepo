@@ -1,13 +1,12 @@
 import * as o from "obsidian";
+import LockScreenPlugin from "./index";
 import { showLockScreen } from "./show-lock-screen";
-import { getSettings } from "./settings/init-settings";
 
-const showLockScreenOnWindowBlur = (plugin: o.Plugin) => {
+const showLockScreenOnWindowBlur = (plugin: LockScreenPlugin) => {
   let timeout: number;
-  const ms = getSettings().timeoutWindowBlur;
 
   plugin.registerDomEvent(window, "blur", () => {
-    timeout = setTimeout(showLockScreen, ms);
+    timeout = setTimeout(showLockScreen, plugin.settings.timeoutWindowBlur);
   });
 
   plugin.registerDomEvent(window, "focus", () => {
@@ -15,10 +14,10 @@ const showLockScreenOnWindowBlur = (plugin: o.Plugin) => {
   });
 };
 
-type HTMLElementEvent = Parameters<o.Plugin["registerDomEvent"]>[1];
+type HTMLElementEvent = Parameters<LockScreenPlugin["registerDomEvent"]>[1];
 
-const showLockScreenWhenInteractionStops = (plugin: o.Plugin) => {
-  const ms = Math.max(getSettings().timeoutInteraction, 5000);
+const showLockScreenWhenInteractionStops = (plugin: LockScreenPlugin) => {
+  const ms = Math.max(plugin.settings.timeoutInteraction, 5000);
   let timeout = setTimeout(showLockScreen, ms);
 
   const resetTimeout = () => {
@@ -43,7 +42,7 @@ const showLockScreenWhenInteractionStops = (plugin: o.Plugin) => {
   }
 };
 
-export const showLockScreenWhenBackgrounded = (plugin: o.Plugin) => {
+export const showLockScreenWhenBackgrounded = (plugin: LockScreenPlugin) => {
   if (o.Platform.isDesktopApp) {
     showLockScreenOnWindowBlur(plugin);
   } else {

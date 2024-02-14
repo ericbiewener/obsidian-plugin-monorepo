@@ -1,9 +1,9 @@
-import assert from "assert";
 import fse from "fs-extra";
 import os from "os";
 import path from "path";
 import TerserPlugin from "terser-webpack-plugin";
 import { Compiler, Configuration } from "webpack";
+import { assert } from "./utils/assert";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -20,7 +20,13 @@ const paths = {
   },
 };
 
-const plugins = ["grab-bag", "jump", "lock-screen", "templater"] as const;
+const plugins = [
+  "grab-bag",
+  "jump",
+  "lock-screen",
+  "templater",
+  "omni-switcher",
+] as const;
 type Plugin = (typeof plugins)[number];
 type Env = Partial<Record<Plugin, boolean>>;
 
@@ -112,10 +118,16 @@ export default async (env: Env): Promise<Configuration> => {
 };
 
 const MANIFEST_FILE = "manifest.json";
+const allVaults = [
+  paths.vaults.personal,
+  paths.vaults.private,
+  paths.vaults.work,
+];
 
 const pluginToVault: Record<Plugin, string[]> = {
   "lock-screen": [paths.vaults.private],
-  "grab-bag": [paths.vaults.personal, paths.vaults.private, paths.vaults.work],
+  "grab-bag": allVaults,
+  "omni-switcher": allVaults,
   jump: [paths.vaults.work],
   templater: [paths.vaults.work],
 };

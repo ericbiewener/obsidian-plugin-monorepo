@@ -1,6 +1,6 @@
 import * as o from "obsidian";
-import { getSettings } from "./init-settings";
-import { createSettingsTab } from "../../../create-settings-tab";
+import { createSettingsTab } from "../../../settings/create-settings-tab";
+import LockScreenPlugin from "../index";
 
 const cleanNumericVal = (text: o.TextComponent, value: string) => {
   const parsedVal = parseInt(value, 10) || 0;
@@ -8,8 +8,8 @@ const cleanNumericVal = (text: o.TextComponent, value: string) => {
   return parsedVal;
 };
 
-export const addSettingsTab = (plugin: o.Plugin) => {
-  const settings = getSettings();
+export const addSettingsTab = (plugin: LockScreenPlugin) => {
+  const { settings } = plugin;
 
   plugin.addSettingTab(
     createSettingsTab(plugin, ({ containerEl }) => {

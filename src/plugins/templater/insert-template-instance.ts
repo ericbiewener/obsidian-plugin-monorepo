@@ -1,5 +1,5 @@
-import assert from "assert";
 import * as o from "obsidian";
+import { assert } from "../../../utils/assert";
 import { getEditor } from "../../../utils/obsidian/editor/get-editor";
 import { getHeadingContainingSelection } from "../../../utils/obsidian/get-heading-containing-selection";
 import { locToEditorPos } from "../../../utils/obsidian/loc-to-editor-pos";
