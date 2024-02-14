@@ -49,7 +49,7 @@ const showPasswordField = (
     e.stopPropagation();
     e.preventDefault();
 
-    if (input.value !== plugin.settings.password) {
+    if (input.value !== plugin.data.settings.password) {
       if (showError) {
         const { color } = input.style;
         input.style.color = "#C00";
@@ -117,7 +117,7 @@ export const showLockScreen = (plugin: LockScreenPlugin) => {
     display: "flex",
   } as CSSStyleDeclaration);
 
-  if (plugin.settings.password) {
+  if (plugin.data.settings.password) {
     showPasswordField(plugin, container);
   } else {
     showNoPasswordMsg(plugin, container);

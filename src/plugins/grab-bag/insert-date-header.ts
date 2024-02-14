@@ -1,8 +1,8 @@
 import formatDate from "date-fns/format";
 import * as o from "obsidian";
-import { getEditor } from "../../../utils/obsidian/editor/get-editor";
-import { getActiveFileMetadata } from "../../../utils/obsidian/metadata/get-active-file-metadata";
 import { addCommand } from "../../add-command";
+import { getEditor } from "../../utils/obsidian/editor/get-editor";
+import { getActiveFileMetadata } from "../../utils/obsidian/metadata/get-active-file-metadata";
 
 const getTimeHeaderStr = () =>
   `### ${formatDate(new Date(), "h:mm a")}\n\n\n\n`;

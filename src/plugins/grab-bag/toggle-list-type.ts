@@ -1,6 +1,6 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { getEditor } from "../../../utils/obsidian/editor/get-editor";
+import { getEditor } from "../../utils/obsidian/editor/get-editor";
 
 const unorderedListItem = /^(\s*)-( .*)/;
 

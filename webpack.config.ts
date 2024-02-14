@@ -3,7 +3,7 @@ import os from "os";
 import path from "path";
 import TerserPlugin from "terser-webpack-plugin";
 import { Compiler, Configuration } from "webpack";
-import { assert } from "./utils/assert";
+import { assert } from "./src/utils/assert";
 
 const isProd = process.env.NODE_ENV === "production";
 

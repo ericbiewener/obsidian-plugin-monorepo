@@ -9,7 +9,7 @@ const cleanNumericVal = (text: o.TextComponent, value: string) => {
 };
 
 export const addSettingsTab = (plugin: LockScreenPlugin) => {
-  const { settings } = plugin;
+  const { settings } = plugin.data;
 
   plugin.addSettingTab(
     createSettingsTab(plugin, ({ containerEl }) => {
@@ -19,7 +19,7 @@ export const addSettingsTab = (plugin: LockScreenPlugin) => {
         .addText((text) =>
           text.setValue(settings.password).onChange(async (value) => {
             settings.password = value;
-            await plugin.saveData(settings);
+            await plugin.saveData({ settings });
           }),
         );
 
@@ -35,7 +35,7 @@ export const addSettingsTab = (plugin: LockScreenPlugin) => {
               .onChange(async (value) => {
                 const parsedVal = cleanNumericVal(text, value);
                 settings.timeoutWindowBlur = parsedVal * 1000;
-                await plugin.saveData(settings);
+                await plugin.saveData({ settings });
               }),
           );
       } else {
@@ -50,7 +50,7 @@ export const addSettingsTab = (plugin: LockScreenPlugin) => {
               .onChange(async (value) => {
                 const parsedVal = cleanNumericVal(text, value);
                 settings.timeoutInteraction = Math.max(parsedVal * 1000, 5000);
-                await plugin.saveData(settings);
+                await plugin.saveData({ settings });
               }),
           );
 

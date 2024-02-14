@@ -3,6 +3,8 @@ import * as o from "obsidian";
 declare module "obsidian" {
   export interface App {
     commands: {
+      commands: Record<string, o.Command>;
+      // This is *not* visible when logging `app.commands` to the console
       executeCommandById: (id: string) => boolean;
     };
   }

@@ -6,7 +6,10 @@ const showLockScreenOnWindowBlur = (plugin: LockScreenPlugin) => {
   let timeout: number;
 
   plugin.registerDomEvent(window, "blur", () => {
-    timeout = setTimeout(showLockScreen, plugin.settings.timeoutWindowBlur);
+    timeout = setTimeout(
+      showLockScreen,
+      plugin.data.settings.timeoutWindowBlur,
+    );
   });
 
   plugin.registerDomEvent(window, "focus", () => {
@@ -17,7 +20,7 @@ const showLockScreenOnWindowBlur = (plugin: LockScreenPlugin) => {
 type HTMLElementEvent = Parameters<LockScreenPlugin["registerDomEvent"]>[1];
 
 const showLockScreenWhenInteractionStops = (plugin: LockScreenPlugin) => {
-  const ms = Math.max(plugin.settings.timeoutInteraction, 5000);
+  const ms = Math.max(plugin.data.settings.timeoutInteraction, 5000);
   let timeout = setTimeout(showLockScreen, ms);
 
   const resetTimeout = () => {

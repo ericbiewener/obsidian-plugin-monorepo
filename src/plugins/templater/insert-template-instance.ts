@@ -1,12 +1,12 @@
 import * as o from "obsidian";
-import { assert } from "../../../utils/assert";
-import { getEditor } from "../../../utils/obsidian/editor/get-editor";
-import { getHeadingContainingSelection } from "../../../utils/obsidian/get-heading-containing-selection";
-import { locToEditorPos } from "../../../utils/obsidian/loc-to-editor-pos";
-import { getActiveFileMetadata } from "../../../utils/obsidian/metadata/get-active-file-metadata";
-import { sleep } from "../../../utils/sleep";
-import { findFirstNonSpecialCharPos } from "../../../utils/string/find-first-non-special-char-pos";
 import { addCommand } from "../../add-command";
+import { assert } from "../../utils/assert";
+import { getEditor } from "../../utils/obsidian/editor/get-editor";
+import { getHeadingContainingSelection } from "../../utils/obsidian/get-heading-containing-selection";
+import { locToEditorPos } from "../../utils/obsidian/loc-to-editor-pos";
+import { getActiveFileMetadata } from "../../utils/obsidian/metadata/get-active-file-metadata";
+import { sleep } from "../../utils/sleep";
+import { findFirstNonSpecialCharPos } from "../../utils/string/find-first-non-special-char-pos";
 
 const insertTemplateInstance = async ({ app }: o.Plugin) => {
   const metadata = getActiveFileMetadata(app);

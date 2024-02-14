@@ -1,6 +1,6 @@
 import * as o from "obsidian";
+import { goToFileLocation } from "../../utils/obsidian/go-to-file-location";
 import { HeadingSuggestion } from "./types";
-import { goToFileLocation } from "../../../utils/obsidian/go-to-file-location";
 
 export const goToHeadingSuggestion = (
   app: o.App,

@@ -1,0 +1,7 @@
+.inputIconButton {
+  align-self: center;
+  margin-right: 12px;
+  /* For some reason this is needed to prevent the element from having an
+  additional 4.5px height beyond the SVG and this center align it properly */
+  display: flex;
+}

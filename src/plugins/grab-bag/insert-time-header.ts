@@ -1,7 +1,7 @@
 import formatDate from "date-fns/format";
 import * as o from "obsidian";
-import { getEditor } from "../../../utils/obsidian/editor/get-editor";
 import { addCommand } from "../../add-command";
+import { getEditor } from "../../utils/obsidian/editor/get-editor";
 
 const insertTimeHeader = async ({ app }: o.Plugin, line = 0) => {
   const time = formatDate(new Date(), "h:mm a");

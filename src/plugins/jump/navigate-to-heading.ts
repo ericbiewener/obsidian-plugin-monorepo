@@ -1,17 +1,16 @@
+import { filter } from "fuzzy";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { filter } from "fuzzy";
+import { getCoreQuickSwitcherClass } from "../../quick-switcher/get-core-quick-switcher";
+import { OMNI_FILENAME } from "./constants";
+import { createBreadcrumbLabel } from "./create-breadcrumb-label";
 import {
   getAllSuggestions,
   getSuggestionsForFilename,
 } from "./get-all-suggestions";
-import { HeadingSuggestion } from "./types";
-import { goToFileLocation } from "../../../utils/obsidian/go-to-file-location";
-import { OMNI_FILENAME, OMNI_PREFIX } from "./constants";
-import { getCoreQuickSwitcherClass } from "../../../utils/obsidian/get-core-quick-switcher";
 import { goToHeadingSuggestion } from "./go-to-heading-suggestion";
 import { renderHeadingSuggestion } from "./render-heading-suggestion";
-import { createBreadcrumbLabel } from "./create-breadcrumb-label";
+import { HeadingSuggestion } from "./types";
 
 const navigate =
   (omniOnly: boolean) =>

@@ -1,7 +1,7 @@
 import * as o from "obsidian";
-import { findLastIndex } from "../../../utils/collections/find-last";
-import { last } from "../../../utils/collections/last";
-import { getFile } from "../../../utils/obsidian/vault/get-file";
+import { findLastIndex } from "../../utils/collections/find-last";
+import { last } from "../../utils/collections/last";
+import { getFile } from "../../utils/obsidian/vault/get-file";
 import { HeadingSuggestion } from "./types";
 
 export type CreateLabel = (
