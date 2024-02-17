@@ -14,6 +14,4 @@ export default class GrabBagPlugin extends o.Plugin {
     addtoggleListTypeCmd(this);
     // addSearchOutlineCmd(this);
   }
-
-  async onunload() {}
 }

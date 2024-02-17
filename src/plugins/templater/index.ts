@@ -6,6 +6,4 @@ export default class GrabBagPlugin extends o.Plugin {
     console.info(`::`, "templater plugin init");
     addInsertTemplateInstanceCmd(this);
   }
-
-  async onunload() {}
 }

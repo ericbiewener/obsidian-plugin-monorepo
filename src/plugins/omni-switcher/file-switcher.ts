@@ -70,8 +70,11 @@ const fileSwitcher = (plugin: OmniSwitcherPlugin) => {
       await plugin.app.workspace.openLinkText(item.path, "", false);
     }
 
-    renderSuggestion(item: o.FuzzyMatch<o.TFile>, el: HTMLElement) {
-      el.innerHTML = item.item.path.split("/").join("<strong> / </strong>");
+    renderSuggestion({ item }: o.FuzzyMatch<o.TFile>, el: HTMLElement) {
+      el.innerHTML = item.path
+        .replace(/\.md$/, "")
+        .split("/")
+        .join("<strong> / </strong>");
     }
 
     onNoSuggestion() {

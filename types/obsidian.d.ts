@@ -4,8 +4,14 @@ declare module "obsidian" {
   export interface App {
     commands: {
       commands: Record<string, o.Command>;
-      // This is *not* visible when logging `app.commands` to the console
-      executeCommandById: (id: string) => boolean;
+      // Not visible when logging `app.commands` to the console
+      executeCommandById(id: string): boolean;
+    };
+    plugins: {
+      manifests: o.PluginManifest[];
+      plugins: Record<string, o.Plugin>;
+      // Not visible when logging `app.plugins` to the console
+      enablePlugin(pluginId: string): Promise<void>;
     };
   }
 

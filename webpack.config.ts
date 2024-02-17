@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import fse from "fs-extra";
 import os from "os";
 import path from "path";
@@ -26,7 +27,9 @@ const plugins = [
   "lock-screen",
   "templater",
   "omni-switcher",
+  "enable-plugins-after-startup",
 ] as const;
+
 type Plugin = (typeof plugins)[number];
 type Env = Partial<Record<Plugin, boolean>>;
 
@@ -130,6 +133,7 @@ const pluginToVault: Record<Plugin, string[]> = {
   "omni-switcher": allVaults,
   jump: [paths.vaults.work],
   templater: [paths.vaults.work],
+  "enable-plugins-after-startup": allVaults,
 };
 
 const postBuild = (plugin: Plugin, src: string, dist: string) => async () => {
@@ -143,5 +147,8 @@ const postBuild = (plugin: Plugin, src: string, dist: string) => async () => {
     await fse.copy(dist, path.join(dir, ".obsidian/plugins", plugin));
   }
 
-  console.info("✅ Copied plugin to vaults.");
+  console.info(
+    chalk.green(`\n✅ Copied plugin ${chalk.cyan(plugin)} to vaults.`),
+  );
+  console.info(vaultPaths.join("\n"));
 };

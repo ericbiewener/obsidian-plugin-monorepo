@@ -1,0 +1,10 @@
+{
+  "id": "enable-plugins-after-startup",
+  "name": "Enable Plugins After Startup",
+  "version": "1.0.0",
+  "minAppVersion": "0.12.0",
+  "description": "Speed up Obsidian startup by delaying plugin activation until after app starts.",
+  "author": "Eric Biewener",
+  "authorUrl": "https://github.com/ericbiewener",
+  "isDesktopOnly": false
+}

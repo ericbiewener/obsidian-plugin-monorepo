@@ -12,6 +12,4 @@ export default class OmniSwitcherPlugin extends o.Plugin {
     addCmdSwitcherCmd(this);
     addFileSwitcherCmd(this);
   }
-
-  async onunload() {}
 }

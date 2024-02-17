@@ -3,11 +3,11 @@ import {
   addJumpToHeadingCmd,
   addJumpToOmniHeadingCmd,
 } from "./jump-to-heading";
-import {
-  addNavigateToOmniHeadingCmd,
-  addNavigateToHeadingCmd,
-} from "./navigate-to-heading";
 import { addJumpToOutlineCmd } from "./jump-to-outline";
+import {
+  addNavigateToHeadingCmd,
+  addNavigateToOmniHeadingCmd,
+} from "./navigate-to-heading";
 
 export default class JumpPlugin extends o.Plugin {
   async onload() {
@@ -18,6 +18,4 @@ export default class JumpPlugin extends o.Plugin {
     addNavigateToOmniHeadingCmd(this);
     addJumpToOutlineCmd(this);
   }
-
-  async onunload() {}
 }
