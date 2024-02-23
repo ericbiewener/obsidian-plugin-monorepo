@@ -1,18 +1,15 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { unique } from "../../utils/collections/unique";
+import { executeAndSaveCmd } from "./execute-and-save-cmd";
+import { getCmds } from "./get-cmds";
 import OmniSwitcherPlugin from "./index";
 
 const cmdSwitcher = (plugin: OmniSwitcherPlugin) => {
-  const { cmdHistory } = plugin.data;
+  const { app } = plugin;
 
   class CmdFuzzySuggestModal extends o.FuzzySuggestModal<o.Command> {
     getItems() {
-      const { commands } = plugin.app.commands;
-      return unique([
-        ...cmdHistory.map((c) => commands[c]),
-        ...Object.values(plugin.app.commands.commands),
-      ]);
+      return getCmds(plugin);
     }
 
     getItemText(item: o.Command) {
@@ -20,12 +17,11 @@ const cmdSwitcher = (plugin: OmniSwitcherPlugin) => {
     }
 
     onChooseItem(item: o.Command) {
-      plugin.app.commands.executeCommandById(item.id);
-      cmdHistory.unshift(item.id);
+      executeAndSaveCmd(plugin, item);
     }
   }
 
-  const modal = new CmdFuzzySuggestModal(plugin.app);
+  const modal = new CmdFuzzySuggestModal(app);
   modal.open();
 };
 

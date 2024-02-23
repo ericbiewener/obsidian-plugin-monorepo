@@ -9,3 +9,19 @@
 .noResultsMsg {
   color: var(--color-accent);
 }
+
+.suggestionContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestionSubContainer {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.suggestionSubContainerDivider {
+  height: 1px;
+  background: var(--text-faint);
+  /* margin: 1rem 0; */
+}

@@ -1,6 +1,7 @@
 import * as o from "obsidian";
 import { addCmdSwitcherCmd } from "./cmd-switcher";
 import { addFileSwitcherCmd } from "./file-switcher";
+import { addUnifiedSwitcherCmd } from "./unified-switcher";
 
 export default class OmniSwitcherPlugin extends o.Plugin {
   data = {
@@ -11,5 +12,6 @@ export default class OmniSwitcherPlugin extends o.Plugin {
     console.info(`::`, "omni-switcher plugin init");
     addCmdSwitcherCmd(this);
     addFileSwitcherCmd(this);
+    addUnifiedSwitcherCmd(this);
   }
 }
