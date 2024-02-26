@@ -1,7 +1,14 @@
 import { filter } from "fuzzy";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
+import { CLICK_VERB } from "../../contants";
+import baseStyle from "../../styles/base.module.css";
 import { createEl } from "../../utils/dom/create-el";
+import { onKey } from "../../utils/dom/on-key";
+import {
+  addNewFileButtonToModal,
+  createFileFromInput,
+} from "./create-file-button";
 import { executeAndSaveCmd } from "./execute-and-save-cmd";
 import { getCmds } from "./get-cmds";
 import OmniSwitcherPlugin from "./index";
@@ -57,6 +64,7 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
 
   const Modal = class extends o.SuggestModal<Suggestion> {
     getSuggestions(input: string) {
+      modal.inputEl.removeEventListener("keyup", createFileOnEnter);
       const suggestions = getSuggestions(input);
       suggestionCount = suggestions.length;
       return suggestions;
@@ -103,10 +111,23 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
         resultContainerEl.style.height = `${resultContainerEl.offsetHeight}px`;
       }
     }
+
+    onNoSuggestion() {
+      super.onNoSuggestion();
+      const el = this.resultContainerEl.querySelector(".suggestion-empty");
+      el.innerHTML = `No notes found. ${CLICK_VERB} here to create a new one.`;
+      el.classList.add(style.noResultsMsg, baseStyle.hoverable);
+      el.addEventListener("click", createFileCb);
+      modal.inputEl.addEventListener("keyup", createFileOnEnter);
+    }
   };
 
   const modal = new Modal(plugin.app);
+  const createFileCb = () => createFileFromInput(plugin, modal);
+  const createFileOnEnter = onKey({ Enter: createFileCb });
+  addNewFileButtonToModal(plugin, modal);
   modal.resultContainerEl.classList.add(style.suggestionContainer);
+
   modal.open();
 };
 
