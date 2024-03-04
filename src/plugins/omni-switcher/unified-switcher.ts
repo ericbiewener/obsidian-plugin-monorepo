@@ -5,6 +5,7 @@ import { CLICK_VERB } from "../../contants";
 import baseStyle from "../../styles/base.module.css";
 import { createEl } from "../../utils/dom/create-el";
 import { onKey } from "../../utils/dom/on-key";
+import { getFilesByModifiedDate } from "../../utils/obsidian/vault/get-files-by-modified-date";
 import {
   addNewFileButtonToModal,
   createFileFromInput,
@@ -29,7 +30,7 @@ const createSuggestionSubContainer = (
 
 const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
   const { app } = plugin;
-  const files = app.vault.getMarkdownFiles();
+  const files = getFilesByModifiedDate(app);
   const cmds = getCmds(plugin);
 
   let suggestionCount = 0;

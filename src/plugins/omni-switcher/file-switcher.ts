@@ -3,6 +3,7 @@ import { addCommand } from "../../add-command";
 import { CLICK_VERB } from "../../contants";
 import baseStyle from "../../styles/base.module.css";
 import { onKey } from "../../utils/dom/on-key";
+import { getFilesByModifiedDate } from "../../utils/obsidian/vault/get-files-by-modified-date";
 import {
   addNewFileButtonToModal,
   createFileFromInput,
@@ -14,7 +15,7 @@ const fileSwitcher = (plugin: OmniSwitcherPlugin) => {
   class FileFuzzySuggestModal extends o.FuzzySuggestModal<o.TFile> {
     getItems() {
       modal.inputEl.removeEventListener("keyup", createFileOnEnter);
-      return plugin.app.vault.getMarkdownFiles();
+      return getFilesByModifiedDate(plugin.app);
     }
 
     getItemText(item: o.TFile) {
