@@ -8,7 +8,7 @@
     "tc": "tsc --noEmit --watch",
     "build": "rm -rf dist && NODE_ENV=production webpack --env",
     "build:all": "scripts/build-all-plugins.sh",
-    "biome": "biome check --no-errors-on-unmatched --apply **/*.json",
+    "biome": "biome check --no-errors-on-unmatched --apply .",
     "prettier": "prettier --write **/*.md",
     "format": "pnpm biome && pnpm prettier",
     "prepare": "husky install"
