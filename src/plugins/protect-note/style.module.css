@@ -1,0 +1,11 @@
+/* Doing this via a CSS class to prevent clashing with other plugins that may modify the CSS via their own classnames */
+.hidden {
+  visibility: hidden;
+}
+
+.password {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
