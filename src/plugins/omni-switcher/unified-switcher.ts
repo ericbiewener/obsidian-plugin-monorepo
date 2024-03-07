@@ -102,8 +102,9 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
 					resultContainerEl.insertAfter(divider, resultContainerEl.firstChild);
 				}
 
-				// Set static height, otherwise the two result containers don't
-				// correctly take up equivalent heights
+				// Set static max height, otherwise the two result containers don't
+				// correctly take up equivalent heights. No idea why. CSS!
+				console.log(resultContainerEl);
 				// resultContainerEl.style.height = `${resultContainerEl.offsetHeight}px`;
 			}
 		}
