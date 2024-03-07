@@ -4,21 +4,28 @@ import { cleanupFileHistory, updateFileHistory } from "./file-history";
 import { addFileSwitcherCmd } from "./file-switcher";
 import { addUnifiedSwitcherCmd } from "./unified-switcher";
 
+const loadData = async (plugin: OmniSwitcherPlugin) => {
+	plugin.data = (await plugin.loadData()) || {
+		cmdHistory: [],
+		fileHistory: [],
+	};
+	cleanupFileHistory(plugin);
+};
+
 export default class OmniSwitcherPlugin extends o.Plugin {
-  data = {
-    cmdHistory: [] as string[],
-    fileHistory: [] as string[],
-  };
+	data = {
+		cmdHistory: [] as string[],
+		fileHistory: [] as string[],
+	};
 
-  async onload() {
-    console.info(`::`, "omni-switcher plugin init");
-    this.data = (await this.loadData()) || { cmdHistory: [], fileHistory: [] };
-    cleanupFileHistory(this);
-    console.info(`:: this.data`, this.data);
+	async onload() {
+		console.info(`::`, "omni-switcher plugin init");
 
-    addCmdSwitcherCmd(this);
-    addFileSwitcherCmd(this);
-    addUnifiedSwitcherCmd(this);
-    updateFileHistory(this);
-  }
+		await loadData(this);
+
+		addCmdSwitcherCmd(this);
+		addFileSwitcherCmd(this);
+		addUnifiedSwitcherCmd(this);
+		updateFileHistory(this);
+	}
 }

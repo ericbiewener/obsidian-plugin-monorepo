@@ -1,0 +1,24 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+	"files": {
+		"include": ["**/*.ts", "**/*.js", "**/*.json"],
+		"ignore": ["node_modules", "dist"]
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noNonNullAssertion": "off",
+				"noParameterAssign": "off",
+				"noUnusedTemplateLiteral": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off"
+			}
+		}
+	}
+}

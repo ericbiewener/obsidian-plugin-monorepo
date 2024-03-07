@@ -9,30 +9,30 @@ import { sleep } from "../../utils/sleep";
 import { findFirstNonSpecialCharPos } from "../../utils/string/find-first-non-special-char-pos";
 
 const insertTemplateInstance = async ({ app }: o.Plugin) => {
-  const metadata = getActiveFileMetadata(app);
-  const template = metadata.frontmatter?.template;
-  assert(template);
+	const metadata = getActiveFileMetadata(app);
+	const template = metadata.frontmatter?.template;
+	assert(template);
 
-  const heading = getHeadingContainingSelection(app);
-  const pos = heading?.position || metadata.frontmatterPosition!;
-  const editor = getEditor(app);
-  editor.replaceRange(`\n\n${template}`, locToEditorPos(pos.end));
+	const heading = getHeadingContainingSelection(app);
+	const pos = heading?.position || metadata.frontmatterPosition!;
+	const editor = getEditor(app);
+	editor.replaceRange(`\n\n${template}`, locToEditorPos(pos.end));
 
-  const line = pos.end.line + 2; // 2 new lines
-  const ch = findFirstNonSpecialCharPos(template) || 0;
+	const line = pos.end.line + 2; // 2 new lines
+	const ch = findFirstNonSpecialCharPos(template) || 0;
 
-  // Doesn't correctly set selection without first setting cursor to the line
-  // in order to show special heading chars, then sleeping 0ms, then setting
-  // actual selection
-  editor.setCursor(line);
-  await sleep();
-  editor.setSelection(
-    { line, ch },
-    { line, ch: template.split("\n")[0].length },
-  );
+	// Doesn't correctly set selection without first setting cursor to the line
+	// in order to show special heading chars, then sleeping 0ms, then setting
+	// actual selection
+	editor.setCursor(line);
+	await sleep();
+	editor.setSelection(
+		{ line, ch },
+		{ line, ch: template.split("\n")[0].length },
+	);
 };
 
 export const addInsertTemplateInstanceCmd = addCommand(
-  "Insert Template Instance",
-  insertTemplateInstance,
+	"Insert Template Instance",
+	insertTemplateInstance,
 );
