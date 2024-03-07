@@ -4,12 +4,12 @@ import { getFullLineRange } from "../range/get-full-line-range";
 type Replacer = (substring: string, ...args: any[]) => string;
 
 export const replaceLinesViaRegex = (
-  editor: o.Editor,
-  re: RegExp,
-  replacer: Replacer,
+	editor: o.Editor,
+	re: RegExp,
+	replacer: Replacer,
 ) => {
-  const { start, end } = getFullLineRange(editor);
-  const content = editor.getRange(start, end);
-  const newContent = content.replace(re, replacer);
-  editor.replaceRange(newContent, start, end);
+	const { start, end } = getFullLineRange(editor);
+	const content = editor.getRange(start, end);
+	const newContent = content.replace(re, replacer);
+	editor.replaceRange(newContent, start, end);
 };

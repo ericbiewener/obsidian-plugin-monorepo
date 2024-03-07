@@ -5,27 +5,27 @@ import { getCmds } from "./get-cmds";
 import OmniSwitcherPlugin from "./index";
 
 const cmdSwitcher = (plugin: OmniSwitcherPlugin) => {
-  const { app } = plugin;
+	const { app } = plugin;
 
-  class CmdFuzzySuggestModal extends o.FuzzySuggestModal<o.Command> {
-    getItems() {
-      return getCmds(plugin);
-    }
+	class CmdFuzzySuggestModal extends o.FuzzySuggestModal<o.Command> {
+		getItems() {
+			return getCmds(plugin);
+		}
 
-    getItemText(item: o.Command) {
-      return item.name;
-    }
+		getItemText(item: o.Command) {
+			return item.name;
+		}
 
-    onChooseItem(item: o.Command) {
-      executeAndSaveCmd(plugin, item);
-    }
-  }
+		onChooseItem(item: o.Command) {
+			executeAndSaveCmd(plugin, item);
+		}
+	}
 
-  const modal = new CmdFuzzySuggestModal(app);
-  modal.open();
+	const modal = new CmdFuzzySuggestModal(app);
+	modal.open();
 };
 
 export const addCmdSwitcherCmd = addCommand(
-  "Open Omni Command Switcher",
-  cmdSwitcher,
+	"Open Omni Command Switcher",
+	cmdSwitcher,
 );

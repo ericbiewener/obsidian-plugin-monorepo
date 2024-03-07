@@ -2,6 +2,6 @@
 const regex = /[a-zA-Z0-9]/;
 
 export const findFirstNonSpecialCharPos = (str: string) => {
-  const idx = str.search(regex);
-  return idx > -1 ? idx : null;
+	const idx = str.search(regex);
+	return idx > -1 ? idx : null;
 };

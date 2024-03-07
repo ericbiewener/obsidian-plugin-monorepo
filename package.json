@@ -8,9 +8,11 @@
     "tc": "tsc --noEmit --watch",
     "build": "rm -rf dist && NODE_ENV=production webpack --env",
     "build:all": "scripts/build-all-plugins.sh",
-    "biome": "biome check --apply --no-errors-on-unmatched --log-level=info **/*",
-    "prettier": "prettier --write **/*.md",
-    "format": "pnpm biome && pnpm prettier",
+    "biome": "biome check --apply --no-errors-on-unmatched",
+    "biome:all": "pnpm biome **/*",
+    "prettier": "prettier --write",
+    "prettier:all": "pnpm prettier **/*.md",
+    "format": "pnpm biome:all && pnpm prettier",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -50,8 +52,8 @@
     "webpack-cli": "5.1.4"
   },
   "lint-staged": {
-    "*.md": "prettier --write",
-    "*.{ts,js,json}": "biome check --apply"
+    "*.md": "pnpm prettier",
+    "*.{ts,js,json}": "pnpm biome"
   },
   "dependencies": {
     "date-fns": "2.30.0",
