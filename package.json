@@ -12,7 +12,7 @@
     "biome:all": "pnpm biome **/*",
     "prettier": "prettier --write",
     "prettier:all": "pnpm prettier **/*.md",
-    "format": "pnpm biome:all && pnpm prettier",
+    "format": "pnpm biome:all && pnpm prettier:all",
     "prepare": "husky install"
   },
   "keywords": [],
