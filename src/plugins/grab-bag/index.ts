@@ -6,12 +6,12 @@ import { addtoggleListTypeCmd } from "./toggle-list-type";
 // import { addSearchOutlineCmd } from "./search-outline";
 
 export default class GrabBagPlugin extends o.Plugin {
-  async onload() {
-    console.info(`::`, "grab-bag plugin init");
-    addInsertTimeHeaderCmd(this);
-    addInsertDateHeaderCmd(this);
-    addDemoteHeadingsCmd(this);
-    addtoggleListTypeCmd(this);
-    // addSearchOutlineCmd(this);
-  }
+	async onload() {
+		console.info(`::`, "grab-bag plugin init");
+		addInsertTimeHeaderCmd(this);
+		addInsertDateHeaderCmd(this);
+		addDemoteHeadingsCmd(this);
+		addtoggleListTypeCmd(this);
+		// addSearchOutlineCmd(this);
+	}
 }

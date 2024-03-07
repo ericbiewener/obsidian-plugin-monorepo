@@ -1,10 +1,10 @@
 {
-  "id": "jump",
-  "name": "Jump",
-  "version": "0.0.1",
-  "minAppVersion": "1.4.16",
-  "description": "Jump to where you need to be.",
-  "author": "Eric Biewener",
-  "authorUrl": "https://github.com/ericbiewener",
-  "isDesktopOnly": false
+	"id": "jump",
+	"name": "Jump",
+	"version": "0.0.1",
+	"minAppVersion": "1.4.16",
+	"description": "Jump to where you need to be.",
+	"author": "Eric Biewener",
+	"authorUrl": "https://github.com/ericbiewener",
+	"isDesktopOnly": false
 }
