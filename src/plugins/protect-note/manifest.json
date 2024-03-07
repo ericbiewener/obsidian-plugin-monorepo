@@ -1,9 +1,9 @@
 {
-	"id": "lock-screen",
-	"name": "Lock Screen",
+	"id": "protect-note",
+	"name": "Protect Note",
 	"version": "1.3.0",
 	"minAppVersion": "0.12.0",
-	"description": "Protect your vault with a lock screen.",
+	"description": "Password protect a note.",
 	"author": "Eric Biewener",
 	"authorUrl": "https://github.com/ericbiewener",
 	"isDesktopOnly": false
