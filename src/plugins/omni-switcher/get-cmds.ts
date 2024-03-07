@@ -1,7 +1,6 @@
 import OmniSwitcherPlugin from ".";
 import { unique } from "../../utils/collections/unique";
 import { isDefined } from "../../utils/is-defined";
-import { isString } from "../../utils/is-string";
 
 export const getCmds = ({ app, data }: OmniSwitcherPlugin) => {
 	const { cmdHistory } = data;

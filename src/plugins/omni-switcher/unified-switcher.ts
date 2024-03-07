@@ -1,14 +1,8 @@
 import { filter } from "fuzzy";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import baseStyle from "../../styles/base.module.css";
 import { createEl } from "../../utils/dom/create-el";
-import { onKey } from "../../utils/dom/on-key";
-import { NO_NOTES_FOUND } from "./constants";
-import {
-	addNewFileButtonToModal,
-	createFileFromInput,
-} from "./create-file-button";
+import { addNewFileButtonToModal } from "./create-file-button";
 import { createNoResultsEl } from "./create-no-results-el";
 import { executeAndSaveCmd } from "./execute-and-save-cmd";
 import { getCmds } from "./get-cmds";

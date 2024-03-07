@@ -1,17 +1,10 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import baseStyle from "../../styles/base.module.css";
-import { onKey } from "../../utils/dom/on-key";
-import { NO_NOTES_FOUND } from "./constants";
-import {
-	addNewFileButtonToModal,
-	createFileFromInput,
-} from "./create-file-button";
+import { addNewFileButtonToModal } from "./create-file-button";
 import { createNoResultsEl } from "./create-no-results-el";
 import { getCreateFileCallbacks } from "./get-create-file-callbacks";
 import { getFilesByLastOpened } from "./get-files-by-last-opened";
 import OmniSwitcherPlugin from "./index";
-import style from "./style.module.css";
 
 const fileSwitcher = (plugin: OmniSwitcherPlugin) => {
 	class FileFuzzySuggestModal extends o.FuzzySuggestModal<o.TFile> {

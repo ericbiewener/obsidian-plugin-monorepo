@@ -18,6 +18,9 @@
 			},
 			"suspicious": {
 				"noExplicitAny": "off"
+			},
+			"nursery": {
+				"noUnusedImports": "error"
 			}
 		}
 	}
