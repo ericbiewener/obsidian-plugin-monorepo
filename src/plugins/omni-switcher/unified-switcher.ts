@@ -1,17 +1,17 @@
 import { filter } from "fuzzy";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { CLICK_VERB } from "../../contants";
 import baseStyle from "../../styles/base.module.css";
 import { createEl } from "../../utils/dom/create-el";
 import { onKey } from "../../utils/dom/on-key";
-import { getFilesByModifiedDate } from "../../utils/obsidian/vault/get-files-by-modified-date";
+import { NO_NOTES_FOUND } from "./constants";
 import {
   addNewFileButtonToModal,
   createFileFromInput,
 } from "./create-file-button";
 import { executeAndSaveCmd } from "./execute-and-save-cmd";
 import { getCmds } from "./get-cmds";
+import { getFilesByLastOpened } from "./get-files-by-last-opened";
 import OmniSwitcherPlugin from "./index";
 import style from "./style.module.css";
 
@@ -29,8 +29,7 @@ const createSuggestionSubContainer = (
 };
 
 const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
-  const { app } = plugin;
-  const files = getFilesByModifiedDate(app);
+  const files = getFilesByLastOpened(plugin);
   const cmds = getCmds(plugin);
 
   let suggestionCount = 0;
@@ -75,7 +74,7 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
       if (suggestion instanceof o.TFile) {
         await plugin.app.workspace.openLinkText(suggestion.path, "", false);
       } else {
-        executeAndSaveCmd(plugin, suggestion);
+        await executeAndSaveCmd(plugin, suggestion);
       }
     }
 
@@ -116,7 +115,7 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
     onNoSuggestion() {
       super.onNoSuggestion();
       const el = this.resultContainerEl.querySelector(".suggestion-empty");
-      el.innerHTML = `No notes found. ${CLICK_VERB} here to create a new one.`;
+      el.innerHTML = NO_NOTES_FOUND;
       el.classList.add(style.noResultsMsg, baseStyle.hoverable);
       el.addEventListener("click", createFileCb);
       modal.inputEl.addEventListener("keyup", createFileOnEnter);

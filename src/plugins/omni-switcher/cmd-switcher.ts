@@ -16,8 +16,8 @@ const cmdSwitcher = (plugin: OmniSwitcherPlugin) => {
       return item.name;
     }
 
-    onChooseItem(item: o.Command) {
-      executeAndSaveCmd(plugin, item);
+    async onChooseItem(item: o.Command) {
+      await executeAndSaveCmd(plugin, item);
     }
   }
 
