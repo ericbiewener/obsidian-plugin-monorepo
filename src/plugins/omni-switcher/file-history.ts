@@ -7,6 +7,7 @@ import { onceOnFileOpen } from "../../utils/obsidian/workspace/once-on-file-open
  */
 export const cleanupFileHistory = (plugin: OmniSwitcherPlugin) => {
 	const { app, data } = plugin;
+	// Do this on `fileOpen` to ensure vault is fully loaded
 	onceOnFileOpen(app, () => {
 		const files = app.vault.getMarkdownFiles();
 		data.fileHistory = data.fileHistory.filter((f) =>

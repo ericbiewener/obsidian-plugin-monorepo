@@ -1,4 +1,5 @@
 import * as o from "obsidian";
+import { cleanupCmdHistory } from "./cmd-history";
 import { addCmdSwitcherCmd } from "./cmd-switcher";
 import { cleanupFileHistory, updateFileHistory } from "./file-history";
 import { addFileSwitcherCmd } from "./file-switcher";
@@ -10,6 +11,7 @@ const loadData = async (plugin: OmniSwitcherPlugin) => {
 		fileHistory: [],
 	};
 	cleanupFileHistory(plugin);
+	cleanupCmdHistory(plugin);
 };
 
 export default class OmniSwitcherPlugin extends o.Plugin {
