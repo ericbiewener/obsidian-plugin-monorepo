@@ -110,7 +110,7 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
 
 				// Set static height, otherwise the two result containers don't
 				// correctly take up equivalent heights
-				resultContainerEl.style.height = `${resultContainerEl.offsetHeight}px`;
+				// resultContainerEl.style.height = `${resultContainerEl.offsetHeight}px`;
 			}
 		}
 
