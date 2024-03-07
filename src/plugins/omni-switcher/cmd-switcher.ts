@@ -1,3 +1,4 @@
+import { filter } from "fuzzy";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
 import { executeAndSaveCmd } from "./execute-and-save-cmd";
@@ -7,17 +8,22 @@ import OmniSwitcherPlugin from "./index";
 const cmdSwitcher = (plugin: OmniSwitcherPlugin) => {
 	const { app } = plugin;
 
-	class CmdFuzzySuggestModal extends o.FuzzySuggestModal<o.Command> {
-		getItems() {
-			return getCmds(plugin);
+	const cmds = getCmds(plugin);
+
+	// Not using o.FuzzySuggestModal because that doesn't let us apply our cmdHistory to the fuzzy cmd results
+	class CmdFuzzySuggestModal extends o.SuggestModal<o.Command> {
+		getSuggestions(input: string) {
+			return input
+				? filter(input, cmds, { extract: (s) => s.name }).map((r) => r.original)
+				: cmds;
 		}
 
-		getItemText(item: o.Command) {
-			return item.name;
+		renderSuggestion(cmd: o.Command, el: HTMLElement) {
+			el.innerHTML = cmd.name;
 		}
 
-		async onChooseItem(item: o.Command) {
-			await executeAndSaveCmd(plugin, item);
+		async onChooseSuggestion(suggestion: o.Command) {
+			await executeAndSaveCmd(plugin, suggestion);
 		}
 	}
 

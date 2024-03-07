@@ -2,6 +2,7 @@ import formatDate from "date-fns/format";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
 import { getEditor } from "../../utils/obsidian/editor/get-editor";
+import { getFirstLine } from "../../utils/obsidian/editor/get-first-line";
 import { getActiveFileMetadata } from "../../utils/obsidian/metadata/get-active-file-metadata";
 
 const getTimeHeaderStr = () =>
@@ -15,7 +16,7 @@ const setAndScrollToCursor = (editor: o.Editor, line: number) => {
 const insertDateAndTimeHeader = (app: o.App, dateStr: string) => {
 	const editor = getEditor(app);
 	editor.replaceRange(`# ${dateStr}\n\n${getTimeHeaderStr()}`, {
-		line: 0,
+		line: getFirstLine(editor),
 		ch: 0,
 	});
 	setAndScrollToCursor(editor, 4);
