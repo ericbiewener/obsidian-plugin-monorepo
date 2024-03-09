@@ -1,6 +1,6 @@
 import * as o from "obsidian";
-import { onceOnFileOpen } from "../../utils/obsidian/workspace/once-on-file-open";
-import OmniSwitcherPlugin from "./index";
+import { onceOnFileOpen } from "../../../utils/obsidian/workspace/once-on-file-open";
+import OmniSwitcherPlugin from "../index";
 
 export const updateCmdHistory = async (
 	plugin: OmniSwitcherPlugin,

@@ -1,15 +1,16 @@
-import { filter } from "fuzzy";
 import * as o from "obsidian";
-import { addCommand } from "../../add-command";
-import { createEl } from "../../utils/dom/create-el";
-import { addNewFileButtonToModal } from "./create-file-button";
-import { createNoResultsEl } from "./create-no-results-el";
-import { executeAndSaveCmd } from "./execute-and-save-cmd";
-import { getCmds } from "./get-cmds";
-import { getCreateFileCallbacks } from "./get-create-file-callbacks";
-import { getFilesByLastOpened } from "./get-files-by-last-opened";
-import OmniSwitcherPlugin from "./index";
-import style from "./style.module.css";
+import { addCommand } from "../../../add-command";
+import { createEl } from "../../../utils/dom/create-el";
+import { addNewFileButtonToModal } from "../create-file-button";
+import { createNoResultsEl } from "../create-no-results-el";
+import { executeAndSaveCmd } from "../execute-and-save-cmd";
+import { fuzzyFilterCmds, fuzzyFilterFiles } from "../fuzzy-filtering";
+import { getCmds } from "../get-cmds";
+import { getCreateFileCallbacks } from "../get-create-file-callbacks";
+import { getFileSuggestionHTML } from "../get-file-suggestion-html";
+import { getFilesByLastOpened } from "../get-files-by-last-opened";
+import OmniSwitcherPlugin from "../index";
+import style from "../style.module.css";
 
 type Suggestion = o.Command | o.TFile;
 
@@ -35,27 +36,7 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
 	const getSuggestions = (input: string) => {
 		fileSuggestionEls.length = 0;
 		cmdSuggestionEls.length = 0;
-
-		// We need to
-		if (!input) return [...files, ...cmds];
-
-		const isCmd = input[0] === ",";
-		const isFile = input[0] === ".";
-		if (isCmd || isFile) {
-			input = input.slice(1);
-		}
-
-		const filteredFiles = isCmd
-			? []
-			: filter(input, files, {
-					extract: (s) => s.basename,
-			  }).map((r) => r.original);
-
-		const filteredCmds = isFile
-			? []
-			: filter(input, cmds, { extract: (s) => s.name }).map((r) => r.original);
-
-		return [...filteredFiles, ...filteredCmds];
+		return [...fuzzyFilterFiles(input, files), ...fuzzyFilterCmds(input, cmds)];
 	};
 
 	const Modal = class extends o.SuggestModal<Suggestion> {
@@ -76,7 +57,7 @@ const unifiedSwitcher = (plugin: OmniSwitcherPlugin) => {
 
 		renderSuggestion(suggestion: Suggestion, el: HTMLElement) {
 			if (suggestion instanceof o.TFile) {
-				el.innerHTML = suggestion.basename;
+				el.innerHTML = getFileSuggestionHTML(suggestion);
 				fileSuggestionEls.push(el);
 			} else {
 				el.innerHTML = suggestion.name;

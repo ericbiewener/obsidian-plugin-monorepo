@@ -1,6 +1,6 @@
 import * as o from "obsidian";
 import OmniSwitcherPlugin from ".";
-import { updateCmdHistory } from "./cmd-history";
+import { updateCmdHistory } from "./data/cmd-history";
 
 export const executeAndSaveCmd = async (
 	plugin: OmniSwitcherPlugin,

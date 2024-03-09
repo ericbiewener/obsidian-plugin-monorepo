@@ -1,9 +1,9 @@
 import * as o from "obsidian";
-import { cleanupCmdHistory } from "./cmd-history";
-import { addCmdSwitcherCmd } from "./cmd-switcher";
-import { cleanupFileHistory, updateFileHistory } from "./file-history";
-import { addFileSwitcherCmd } from "./file-switcher";
-import { addUnifiedSwitcherCmd } from "./unified-switcher";
+import { cleanupCmdHistory } from "./data/cmd-history";
+import { cleanupFileHistory, updateFileHistory } from "./data/file-history";
+import { addCmdSwitcherCmd } from "./switchers/cmd-switcher";
+import { addFileSwitcherCmd } from "./switchers/file-switcher";
+import { addUnifiedSwitcherCmd } from "./switchers/unified-switcher";
 
 const loadData = async (plugin: OmniSwitcherPlugin) => {
 	plugin.data = (await plugin.loadData()) || {

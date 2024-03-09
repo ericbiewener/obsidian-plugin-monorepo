@@ -1,6 +1,6 @@
 import * as o from "obsidian";
-import OmniSwitcherPlugin from ".";
-import { onceOnFileOpen } from "../../utils/obsidian/workspace/once-on-file-open";
+import { onceOnFileOpen } from "../../../utils/obsidian/workspace/once-on-file-open";
+import OmniSwitcherPlugin from "../index";
 
 /**
  * Delete files from history that no longer exist in the vault
