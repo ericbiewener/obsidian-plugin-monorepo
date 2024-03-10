@@ -16,7 +16,6 @@ const addTogglePropertyVisibilityCmd = addCommand(
 );
 
 export const initTogglePropertyVisibility = (plugin: GrabBagPlugin) => {
-	console.info(`:: style.hideProperties`, style.hideProperties);
 	document.body.classList.add(style.hideProperties);
 	addTogglePropertyVisibilityCmd(plugin);
 };
