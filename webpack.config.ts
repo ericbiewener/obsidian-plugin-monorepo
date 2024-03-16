@@ -11,7 +11,7 @@ const isProd = process.env.NODE_ENV === "production";
 const paths = {
 	pluginSrc: path.join(__dirname, "src/plugins"),
 	vaults: {
-		personal: path.join(os.homedir(), "Repos/Personal/personal-notes"),
+		personal: path.join(os.homedir(), "Sync/Personal Notes"),
 		test: path.join(os.homedir(), "Repos/Personal/obsidian-vault-testing"),
 		private: path.join(os.homedir(), "Repos/Personal/personal-notes-private"),
 		work: path.join(
