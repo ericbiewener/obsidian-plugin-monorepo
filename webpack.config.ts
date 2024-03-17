@@ -129,7 +129,7 @@ const allVaults = [
 ];
 
 const pluginToVault: Record<Plugin, string[]> = {
-	"lock-screen": [paths.vaults.private],
+	"lock-screen": [paths.vaults.personal],
 	"grab-bag": allVaults,
 	"omni-switcher": allVaults,
 	jump: [paths.vaults.work],

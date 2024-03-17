@@ -7,20 +7,20 @@ import style from "./style.module.css";
 
 const SHOW_PASSWORD_TIMEOUT_MS = 60_000;
 let shouldShowLockScreen = true;
-let timeout: NodeJS.Timeout;
+let shouldShowLockScreenTimeout: NodeJS.Timeout;
 
 const resetTimeout = () => {
-	if (timeout) clearTimeout(timeout);
-	timeout = setTimeout(() => {
+	if (shouldShowLockScreen) return;
+	if (shouldShowLockScreenTimeout) clearTimeout(shouldShowLockScreenTimeout);
+	shouldShowLockScreenTimeout = setTimeout(() => {
 		shouldShowLockScreen = true;
 	}, SHOW_PASSWORD_TIMEOUT_MS);
 };
 
 const removePasswordView = (app: o.App) => {
 	removeElsWithClassName(DOM_CLEANUP_CLASSNAME);
-	getActiveView(app).containerEl.classList.remove(style.hidden);
+	getActiveView(app)?.containerEl.classList.remove(style.hidden);
 	shouldShowLockScreen = false;
-	resetTimeout();
 };
 
 const showPasswordPrompt = (app: o.App, password: string) => {
@@ -35,7 +35,9 @@ const showPasswordPrompt = (app: o.App, password: string) => {
 	input.focus();
 
 	input.addEventListener("input", () => {
-		if (password === input.value) removePasswordView(app);
+		if (password !== input.value) return;
+		removePasswordView(app);
+		resetTimeout();
 	});
 };
 
