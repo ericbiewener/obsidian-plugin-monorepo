@@ -1,14 +1,14 @@
+import { kebabCase } from "case-anything";
 import * as o from "obsidian";
-import { paramCase } from "param-case";
 
 type Opts = Omit<o.Command, "id" | "name" | "callback">;
 
 export const addCommand =
-	(name: string, cb: (plugin: o.Plugin) => unknown, opts?: Opts) =>
-	(plugin: o.Plugin) =>
+	<P extends o.Plugin>(name: string, cb: (plugin: P) => unknown, opts?: Opts) =>
+	(plugin: P) =>
 		plugin.addCommand({
 			name,
-			id: paramCase(name),
+			id: kebabCase(name),
 			callback: () => cb(plugin),
 			...opts,
 		});

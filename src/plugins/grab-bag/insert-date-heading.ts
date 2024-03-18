@@ -33,7 +33,7 @@ const insertTimeHeader = (
 	const dateHeadingIdx = headings.indexOf(dateHeading);
 	const nextHeading = headings[dateHeadingIdx + 1];
 	const line =
-		nextHeading.level === TIME_HEADER.length
+		nextHeading?.level === TIME_HEADER.length
 			? nextHeading.position.start.line
 			: dateHeading.position.start.line + 2;
 	editor.replaceRange(getTimeHeaderStr(), { line, ch: 0 });
@@ -42,7 +42,7 @@ const insertTimeHeader = (
 
 const insertDateHeading = async ({ app }: o.Plugin) => {
 	const dateStr = formatDate(new Date(), "MMM d, yyyy");
-	const headings = getActiveFileMetadata(app).headings || [];
+	const headings = getActiveFileMetadata(app)?.headings || [];
 	const dateHeading = headings.find((h) => h.level === 1);
 	if (dateHeading?.heading !== dateStr) {
 		insertDateAndTimeHeader(app, dateStr);

@@ -1,6 +1,6 @@
 import GrabBagPlugin from ".";
 import { addCommand } from "../../add-command";
-import style from "./style.module.css";
+import style from "./style/style.module.css";
 
 const togglePropertyVisibility = () => {
 	if (document.body.classList.contains(style.hideProperties)) {

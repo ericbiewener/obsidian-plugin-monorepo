@@ -8,7 +8,6 @@ export const replaceCurrentLine = (
 	const cursor = editor.getCursor();
 	const oldLineStr = editor.getLine(cursor.line);
 	const newLineStr = cb(oldLineStr);
-	console.info(newLineStr);
 
 	editor.replaceRange(
 		newLineStr,

@@ -1,4 +1,3 @@
-import * as o from "obsidian";
 import { onceOnFileOpen } from "../../../utils/obsidian/workspace/once-on-file-open";
 import OmniSwitcherPlugin from "../index";
 
@@ -19,7 +18,8 @@ export const cleanupFileHistory = (plugin: OmniSwitcherPlugin) => {
 
 export const updateFileHistory = (plugin: OmniSwitcherPlugin) => {
 	const { data, app } = plugin;
-	app.workspace.on("file-open", async (file: o.TFile) => {
+	app.workspace.on("file-open", async (file) => {
+		if (!file) return;
 		data.fileHistory = data.fileHistory.filter((f) => f !== file.path);
 		data.fileHistory.unshift(file.path);
 		await plugin.saveData(data);

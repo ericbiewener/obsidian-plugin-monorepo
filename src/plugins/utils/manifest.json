@@ -1,0 +1,10 @@
+{
+	"id": "utils",
+	"name": "Utils",
+	"version": "1.3.0",
+	"minAppVersion": "0.12.0",
+	"description": "Utils to share across plugins.",
+	"author": "Eric Biewener",
+	"authorUrl": "https://github.com/ericbiewener",
+	"isDesktopOnly": false
+}

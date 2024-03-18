@@ -1,3 +1,4 @@
+import { spawn } from "child_process";
 import os from "os";
 import path from "path";
 import chalk from "chalk";
@@ -8,12 +9,12 @@ import { assert } from "./src/utils/assert";
 
 const isProd = process.env.NODE_ENV === "production";
 
+const TCM_EXE = path.join(__dirname, "node_modules/.bin/tcm");
+
 const paths = {
 	pluginSrc: path.join(__dirname, "src/plugins"),
 	vaults: {
 		personal: path.join(os.homedir(), "Sync/Personal Notes"),
-		test: path.join(os.homedir(), "Repos/Personal/obsidian-vault-testing"),
-		private: path.join(os.homedir(), "Repos/Personal/personal-notes-private"),
 		work: path.join(
 			os.homedir(),
 			"Library/CloudStorage/OneDrive-WalmartInc/Notes",
@@ -21,15 +22,7 @@ const paths = {
 	},
 };
 
-const plugins = [
-	"grab-bag",
-	"jump",
-	"lock-screen",
-	"templater",
-	"omni-switcher",
-	"enable-plugins-after-startup",
-	"protect-note",
-] as const;
+const plugins = ["grab-bag", "omni-switcher", "protect-note", "utils"] as const;
 
 type Plugin = (typeof plugins)[number];
 type Env = Partial<Record<Plugin, boolean>>;
@@ -98,6 +91,11 @@ export default async (env: Env): Promise<Configuration> => {
 		plugins: [
 			{
 				apply: (compiler: Compiler) => {
+					compiler.hooks.beforeCompile.tap(
+						"BeforeCompilePlugin",
+						preBuild(plugin, src, dist),
+					);
+
 					compiler.hooks.afterEmit.tap(
 						"AfterEmitPlugin",
 						postBuild(plugin, src, dist),
@@ -122,20 +120,17 @@ export default async (env: Env): Promise<Configuration> => {
 };
 
 const MANIFEST_FILE = "manifest.json";
-const allVaults = [
-	paths.vaults.personal,
-	paths.vaults.private,
-	paths.vaults.work,
-];
+const allVaults = [paths.vaults.personal, paths.vaults.work];
 
 const pluginToVault: Record<Plugin, string[]> = {
-	"lock-screen": [paths.vaults.personal],
 	"grab-bag": allVaults,
 	"omni-switcher": allVaults,
-	jump: [paths.vaults.work],
-	templater: [paths.vaults.work],
-	"enable-plugins-after-startup": allVaults,
 	"protect-note": [paths.vaults.personal],
+	utils: allVaults,
+};
+
+const preBuild = (plugin: Plugin, src: string, dist: string) => async () => {
+	spawn(TCM_EXE, ["src"]);
 };
 
 const postBuild = (plugin: Plugin, src: string, dist: string) => async () => {

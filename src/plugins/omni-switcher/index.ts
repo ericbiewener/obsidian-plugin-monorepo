@@ -3,7 +3,6 @@ import { cleanupCmdHistory } from "./data/cmd-history";
 import { cleanupFileHistory, updateFileHistory } from "./data/file-history";
 import { addCmdSwitcherCmd } from "./switchers/cmd-switcher";
 import { addFileSwitcherCmd } from "./switchers/file-switcher";
-import { addUnifiedSwitcherCmd } from "./switchers/unified-switcher";
 
 const loadData = async (plugin: OmniSwitcherPlugin) => {
 	plugin.data = (await plugin.loadData()) || {
@@ -27,7 +26,6 @@ export default class OmniSwitcherPlugin extends o.Plugin {
 
 		addCmdSwitcherCmd(this);
 		addFileSwitcherCmd(this);
-		addUnifiedSwitcherCmd(this);
 		updateFileHistory(this);
 	}
 }

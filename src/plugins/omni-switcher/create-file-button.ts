@@ -2,7 +2,7 @@ import * as o from "obsidian";
 import { ICON_NEW_FILE } from "../../icons";
 import baseStyle from "../../styles/base.module.css";
 import { createFile } from "../../utils/obsidian/vault/create-file";
-import style from "./style.module.css";
+import style from "./style/style.module.css";
 
 export const createFileFromInput = async (
 	{ app }: o.Plugin,

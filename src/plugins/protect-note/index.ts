@@ -1,14 +1,10 @@
 import * as o from "obsidian";
-import { initDomListeners, onFileOpen } from "./on-file-open";
-import { removePasswordView } from "./remove-password-view";
+import { onActiveLeafChange, onUserInactive } from "./password-ui";
 
 export default class ProtectNotePlugin extends o.Plugin {
 	async onload() {
-		onFileOpen(this);
-		initDomListeners();
-	}
-
-	async onunload() {
-		removePasswordView(this.app);
+		console.info(`::`, "protect-note plugin init");
+		onActiveLeafChange(this);
+		onUserInactive(this);
 	}
 }
