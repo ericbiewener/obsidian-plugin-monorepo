@@ -22,7 +22,13 @@ const paths = {
 	},
 };
 
-const plugins = ["grab-bag", "omni-switcher", "protect-note", "utils"] as const;
+const plugins = [
+	"grab-bag",
+	"omni-switcher",
+	"protect-note",
+	"utils",
+	"move-content",
+] as const;
 
 type Plugin = (typeof plugins)[number];
 type Env = Partial<Record<Plugin, boolean>>;
@@ -127,6 +133,7 @@ const pluginToVault: Record<Plugin, string[]> = {
 	"omni-switcher": allVaults,
 	"protect-note": [paths.vaults.personal],
 	utils: allVaults,
+	"move-content": allVaults,
 };
 
 const preBuild = (plugin: Plugin, src: string, dist: string) => async () => {
