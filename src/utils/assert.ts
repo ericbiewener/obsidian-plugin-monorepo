@@ -1,6 +1,5 @@
 /**
- * Importing from node's `assert` library results in undefined in the final
- * webpack bundle. Not sure why.
+ * Can't depend on Node built-ins being available in all environments.
  */
 
 type Assert = (value: unknown, message?: string | Error) => asserts value;

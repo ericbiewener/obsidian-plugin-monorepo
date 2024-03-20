@@ -8,7 +8,12 @@ import { getFileSuggestionHTML } from "../get-file-suggestion-html";
 import { getFilesByLastOpened } from "../get-files-by-last-opened";
 import OmniSwitcherPlugin from "../index";
 
-const fileSwitcher = (plugin: OmniSwitcherPlugin) => {
+export type OnChooseSuggestion = (file: o.TFile) => unknown;
+
+export const openFileSwitcher = (
+	plugin: OmniSwitcherPlugin,
+	onChooseSuggestion?: OnChooseSuggestion,
+) => {
 	const files = getFilesByLastOpened(plugin);
 	// Not using o.FuzzySuggestModal because that doesn't let us apply our
 	// fileHistory to the fuzzy cmd results
@@ -19,7 +24,9 @@ const fileSwitcher = (plugin: OmniSwitcherPlugin) => {
 		}
 
 		async onChooseSuggestion(file: o.TFile) {
-			await plugin.app.workspace.openLinkText(file.path, "", false);
+			await (onChooseSuggestion
+				? onChooseSuggestion(file)
+				: plugin.app.workspace.openLinkText(file.path, "", false));
 		}
 
 		renderSuggestion(file: o.TFile, el: HTMLElement) {
@@ -44,5 +51,5 @@ const fileSwitcher = (plugin: OmniSwitcherPlugin) => {
 
 export const addFileSwitcherCmd = addCommand(
 	"Open Omni File Switcher",
-	fileSwitcher,
+	openFileSwitcher,
 );

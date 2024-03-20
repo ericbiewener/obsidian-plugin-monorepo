@@ -14,7 +14,7 @@ const { name: inputName, desc } = yargs
 const name = {
 	kebab: kebabCase(inputName),
 	pascal: pascalCase(inputName),
-	capital: capitalCase(inputName),
+	capital: capitalCase(inputName).replace(/-/g, " "),
 };
 
 const templateDir = path.join(__dirname, "template");

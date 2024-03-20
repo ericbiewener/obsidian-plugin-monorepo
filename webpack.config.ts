@@ -25,6 +25,8 @@ const paths = {
 const plugins = [
 	"grab-bag",
 	"omni-switcher",
+	"better-command-palette",
+	"better-file-switcher",
 	"protect-note",
 	"utils",
 	"move-content",
@@ -97,10 +99,7 @@ export default async (env: Env): Promise<Configuration> => {
 		plugins: [
 			{
 				apply: (compiler: Compiler) => {
-					compiler.hooks.beforeCompile.tap(
-						"BeforeCompilePlugin",
-						preBuild(plugin, src, dist),
-					);
+					compiler.hooks.beforeCompile.tap("BeforeCompilePlugin", preBuild);
 
 					compiler.hooks.afterEmit.tap(
 						"AfterEmitPlugin",
@@ -130,13 +129,15 @@ const allVaults = [paths.vaults.personal, paths.vaults.work];
 
 const pluginToVault: Record<Plugin, string[]> = {
 	"grab-bag": allVaults,
+	"better-command-palette": allVaults,
+	"better-file-switcher": allVaults,
 	"omni-switcher": allVaults,
 	"protect-note": [paths.vaults.personal],
 	utils: allVaults,
 	"move-content": allVaults,
 };
 
-const preBuild = (plugin: Plugin, src: string, dist: string) => async () => {
+const preBuild = () => {
 	spawn(TCM_EXE, ["src"]);
 };
 

@@ -1,36 +1,31 @@
 import * as o from "obsidian";
 import { addCommand } from "../../../add-command";
+import { unique } from "../../../utils/collections/unique";
+import { isDefined } from "../../../utils/is-defined";
+import { getUtils } from "../../../utils/obsidian/get-utils";
 import { executeAndSaveCmd } from "../execute-and-save-cmd";
-import { fuzzyFilterCmds } from "../fuzzy-filtering";
-import { getCmds } from "../get-cmds";
 import OmniSwitcherPlugin from "../index";
 
-const cmdSwitcher = (plugin: OmniSwitcherPlugin) => {
-	const { app } = plugin;
+const getCmds = ({ app, data }: OmniSwitcherPlugin) => {
+	const { cmdHistory } = data;
+	const { commands } = app.commands;
 
-	const cmds = getCmds(plugin);
-
-	// Not using o.FuzzySuggestModal because that doesn't let us apply our
-	// cmdHistory to the fuzzy cmd results
-	class CmdSuggestModal extends o.SuggestModal<o.Command> {
-		getSuggestions(input: string) {
-			return fuzzyFilterCmds(input, cmds);
-		}
-
-		renderSuggestion(cmd: o.Command, el: HTMLElement) {
-			el.innerHTML = cmd.name;
-		}
-
-		async onChooseSuggestion(cmd: o.Command) {
-			await executeAndSaveCmd(plugin, cmd);
-		}
-	}
-
-	const modal = new CmdSuggestModal(app);
-	modal.open();
+	return unique([
+		...cmdHistory.map((c) => commands[c]).filter(isDefined),
+		...Object.values(app.commands.commands),
+	]);
 };
 
-export const addCmdSwitcherCmd = addCommand(
+const openCmdSuggestModal = (plugin: OmniSwitcherPlugin) => {
+	const utils = getUtils(plugin.app);
+	utils.openCmdSuggestModal(
+		plugin,
+		(cmd: o.Command) => executeAndSaveCmd(plugin, cmd),
+		getCmds,
+	);
+};
+
+export const addCmdSwitcherCmd = addCommand<OmniSwitcherPlugin>(
 	"Open Omni Command Switcher",
-	cmdSwitcher,
+	openCmdSuggestModal,
 );

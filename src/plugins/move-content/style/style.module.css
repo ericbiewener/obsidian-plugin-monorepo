@@ -1,0 +1,7 @@
+.indicator {
+  cursor: pointer;
+  background: var(--color-accent);
+  position: fixed;
+  bottom: var(--size-4-3);
+  right: var(--size-4-3);
+}

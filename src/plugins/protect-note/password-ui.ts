@@ -46,11 +46,10 @@ const showPasswordPromptForLeaf = (
 
 	setVisibility(containerEl, false);
 
-	const input = document.createElement("input");
+	const input = containerEl.createEl("input");
 	input.type = "password";
 	input.className = style.password;
 	input.placeholder = "Password";
-	containerEl.appendChild(input);
 	if (shouldFocus) input.focus();
 
 	input.addEventListener("input", () => {

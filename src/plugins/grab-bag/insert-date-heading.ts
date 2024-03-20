@@ -49,6 +49,7 @@ const insertDateHeading = async ({ app }: o.Plugin) => {
 	} else {
 		insertTimeHeader(app, headings, dateHeading);
 	}
+	getEditor(app).focus();
 };
 
 export const addInsertDateHeadingCmd = addCommand(
