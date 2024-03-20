@@ -24,7 +24,6 @@ const paths = {
 
 const plugins = [
 	"grab-bag",
-	"omni-switcher",
 	"better-command-palette",
 	"better-file-switcher",
 	"protect-note",
@@ -131,7 +130,6 @@ const pluginToVault: Record<Plugin, string[]> = {
 	"grab-bag": allVaults,
 	"better-command-palette": allVaults,
 	"better-file-switcher": allVaults,
-	"omni-switcher": allVaults,
 	"protect-note": [paths.vaults.personal],
 	utils: allVaults,
 	"move-content": allVaults,
