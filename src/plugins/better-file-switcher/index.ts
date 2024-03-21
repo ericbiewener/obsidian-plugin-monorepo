@@ -1,6 +1,9 @@
 import * as o from "obsidian";
 import { onceOnFileOpen } from "../../utils/obsidian/workspace/once-on-file-open";
-import { addOpenFileSuggestModalCmd } from "./file-switcher";
+import {
+	addOpenFileSuggestModalCmd,
+	openFileSuggestModal,
+} from "./file-switcher";
 
 /**
  * Delete files from history that no longer exist in the vault
@@ -47,4 +50,7 @@ export default class BetterFileSwitcherPlugin extends o.Plugin {
 		trackFileHistory(this);
 		addOpenFileSuggestModalCmd(this);
 	}
+
+	openFileSuggestModal = (onChooseSuggestion?: (cmd: o.TFile) => void) =>
+		openFileSuggestModal(this, onChooseSuggestion);
 }

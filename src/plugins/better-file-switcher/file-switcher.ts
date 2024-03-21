@@ -3,7 +3,7 @@ import { addCommand } from "../../add-command";
 import { CLICK_VERB } from "../../contants";
 import baseStyle from "../../styles/base.module.css";
 import { onKey } from "../../utils/dom/on-key";
-import { getUtils } from "../../utils/obsidian/get-utils";
+import { getUtils } from "../../utils/obsidian/get-plugin";
 import { createFile } from "../../utils/obsidian/vault/create-file";
 import BetterFileSwitcherPlugin from "./index";
 import style from "./style/style.module.css";

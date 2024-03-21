@@ -4,7 +4,6 @@ import * as o from "obsidian";
 type Opts<P extends o.Plugin> = {
 	onChooseSuggestion: (file: o.TFile) => void;
 	getFiles?: (plugin: P) => o.TFile[];
-	onGetSuggestions?: (modal: FileSuggestModal<P>) => void;
 	onNoSuggestion?: (modal: FileSuggestModal<P>) => void;
 };
 
@@ -20,7 +19,6 @@ class FileSuggestModal<P extends o.Plugin> extends o.SuggestModal<o.TFile> {
 	}
 
 	getSuggestions(input: string) {
-		this.opts.onGetSuggestions?.(this);
 		return input
 			? filter(input, this.files, { extract: (f) => f.path }).map(
 					(r) => r.original,

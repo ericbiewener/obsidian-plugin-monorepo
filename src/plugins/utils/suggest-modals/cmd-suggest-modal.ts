@@ -6,31 +6,39 @@ type Opts<P extends o.Plugin> = {
 	getCmds?: (plugin: P) => o.Command[];
 };
 
-export const openCmdSuggestModal = <P extends o.Plugin>(
-	plugin: P,
-	{ onChooseSuggestion, getCmds }: Opts<P>,
-) => {
-	const { app } = plugin;
+class CmdSuggestModal<P extends o.Plugin> extends o.SuggestModal<o.Command> {
+	opts: Opts<P>;
+	cmds: o.Command[];
 
-	const cmds = getCmds ? getCmds(plugin) : Object.values(app.commands.commands);
-
-	// Not using o.FuzzySuggestModal because that doesn't let us apply our
-	// cmdHistory to the fuzzy cmd results
-	class CmdSuggestModal extends o.SuggestModal<o.Command> {
-		getSuggestions(input: string) {
-			return input
-				? filter(input, cmds, { extract: (c) => c.name }).map((r) => r.original)
-				: cmds;
-		}
-
-		renderSuggestion(cmd: o.Command, el: HTMLElement) {
-			el.innerHTML = cmd.name;
-		}
-
-		onChooseSuggestion = onChooseSuggestion;
+	constructor(plugin: P, opts: Opts<P>) {
+		const { app } = plugin;
+		super(app);
+		this.opts = opts;
+		this.cmds = opts.getCmds?.(plugin) || Object.values(app.commands.commands);
 	}
 
-	const modal = new CmdSuggestModal(app);
+	getSuggestions(input: string) {
+		return input
+			? filter(input, this.cmds, { extract: (c) => c.name }).map(
+					(r) => r.original,
+			  )
+			: this.cmds;
+	}
+
+	renderSuggestion(cmd: o.Command, el: HTMLElement) {
+		el.innerHTML = cmd.name;
+	}
+
+	onChooseSuggestion(cmd: o.Command) {
+		this.opts.onChooseSuggestion(cmd);
+	}
+}
+
+export const openCmdSuggestModal = <P extends o.Plugin>(
+	plugin: P,
+	opts: Opts<P>,
+) => {
+	const modal = new CmdSuggestModal(plugin, opts);
 	modal.open();
 	return modal;
 };

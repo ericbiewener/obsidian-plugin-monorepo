@@ -2,8 +2,7 @@ import * as o from "obsidian";
 import { addCommand } from "../../add-command";
 import { EDITOR_LINE_CLASS_NAME } from "../../contants";
 import { getEditor } from "../../utils/obsidian/editor/get-editor";
-import { getOmniSwitcher } from "../../utils/obsidian/get-omni-switcher";
-import { getUtils } from "../../utils/obsidian/get-utils";
+import { getPlugin, getUtils } from "../../utils/obsidian/get-plugin";
 import { getActiveFile } from "../../utils/obsidian/workspace/get-active-file";
 import { getActiveView } from "../../utils/obsidian/workspace/get-active-view";
 import MoveContentPlugin from "./index";
@@ -64,9 +63,8 @@ const moveContent = async (plugin: MoveContentPlugin) => {
 	const utils = getUtils(app);
 	const editor = getEditor(app);
 	const txt = utils.getLines(editor, lines.from, lines.to);
-	const { openFileSwitcher } = getOmniSwitcher(app);
 	const originalFile = getActiveFile(app);
-	await openFileSwitcher();
+	await getPlugin(app, "better-file-switcher").openFileSuggestModal();
 
 	const view = getActiveView(app);
 	if (!view) return;

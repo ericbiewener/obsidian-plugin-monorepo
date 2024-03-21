@@ -2,7 +2,7 @@ import * as o from "obsidian";
 import { addCommand } from "../../add-command";
 import { unique } from "../../utils/collections/unique";
 import { isDefined } from "../../utils/is-defined";
-import { getUtils } from "../../utils/obsidian/get-utils";
+import { getUtils } from "../../utils/obsidian/get-plugin";
 import BetterCommandPalettePlugin from "./index";
 
 export const updateCmdHistory = async (
