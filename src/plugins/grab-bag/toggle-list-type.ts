@@ -19,4 +19,5 @@ const toggleListType = async ({ app }: o.Plugin) => {
 export const addtoggleListTypeCmd = addCommand(
 	"Toggle list type",
 	toggleListType,
+	{ icon: "list" },
 );

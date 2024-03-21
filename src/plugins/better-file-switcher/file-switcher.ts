@@ -87,4 +87,5 @@ export const openFileSuggestModal = (
 export const addOpenFileSuggestModalCmd = addCommand<BetterFileSwitcherPlugin>(
 	"Open File Switcher",
 	openFileSuggestModal,
+	{ icon: "target" },
 );

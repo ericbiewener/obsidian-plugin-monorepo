@@ -48,4 +48,5 @@ export const openCmdSuggestModal = (
 export const addOpenCmdSuggestModalCmd = addCommand<BetterCommandPalettePlugin>(
 	"Open Command Palette",
 	openCmdSuggestModal,
+	{ icon: "terminal" },
 );

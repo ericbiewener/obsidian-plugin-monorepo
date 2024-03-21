@@ -2,6 +2,7 @@ import { filter } from "fuzzy";
 import * as o from "obsidian";
 import { getUtils } from "../../../utils/obsidian/get-plugin";
 import { IconName } from "../ui/__generated__/icon-names";
+import style from "./style/style.module.css";
 
 type Opts = {
 	onChooseSuggestion: (icon: IconName) => void;
@@ -30,6 +31,8 @@ class IconSuggestModal<P extends o.Plugin> extends o.SuggestModal<IconName> {
 
 	renderSuggestion(iconName: IconName, el: HTMLElement) {
 		o.setIcon(el, iconName);
+		el.classList.add(style.suggestionItem);
+		el.createEl("div", { text: iconName, cls: style.iconName });
 	}
 
 	onNoSuggestion() {
