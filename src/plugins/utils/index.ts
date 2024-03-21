@@ -11,9 +11,7 @@ import {
 import { onActiveMarkdownLeafChange } from "./on-active-markdown-leaf-change";
 import { openCmdSuggestModal } from "./suggest-modals/cmd-suggest-modal";
 import { openFileSuggestModal } from "./suggest-modals/file-suggest-modal";
-import { openIconSuggestModal } from "./suggest-modals/icon-suggest-modal";
 import * as syntax from "./syntax";
-import { iconNames } from "./ui/__generated__/icon-names";
 import { createIcon } from "./ui/create-icon";
 
 export default class UtilsPlugin extends o.Plugin {
@@ -31,9 +29,7 @@ export default class UtilsPlugin extends o.Plugin {
 	getLines = getLines;
 	deleteLines = deleteLines;
 	deleteText = deleteText;
-	iconNames = iconNames;
 	createIcon = createIcon;
 	openCmdSuggestModal = openCmdSuggestModal;
 	openFileSuggestModal = openFileSuggestModal;
-	openIconSuggestModal = openIconSuggestModal;
 }
