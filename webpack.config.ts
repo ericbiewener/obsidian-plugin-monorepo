@@ -28,7 +28,6 @@ const plugins = [
 	"better-file-switcher",
 	"protect-note",
 	"utils",
-	"move-content",
 ] as const;
 
 type Plugin = (typeof plugins)[number];
@@ -132,7 +131,6 @@ const pluginToVault: Record<Plugin, string[]> = {
 	"better-file-switcher": allVaults,
 	"protect-note": [paths.vaults.personal],
 	utils: allVaults,
-	"move-content": allVaults,
 };
 
 const preBuild = () => {

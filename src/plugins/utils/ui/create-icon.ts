@@ -1,8 +1,7 @@
 import * as o from "obsidian";
-import { IconName } from "./__generated__/icon-names";
 
 export const createIcon = (
-	iconName: IconName,
+	iconName: string,
 	onClick?: (e: MouseEvent) => void,
 ) => {
 	const el = document.createElement("div");

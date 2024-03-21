@@ -62,6 +62,29 @@ const showPasswordPromptForLeaf = (
 	});
 };
 
+const getTitleIconClassName = (iconName: string) => `__titleIcon--${iconName}`;
+
+const addIconToViewTitle = (
+	{ titleContainerEl }: o.MarkdownView,
+	iconName: string,
+) => {
+	const className = getTitleIconClassName(iconName);
+	if (titleContainerEl.querySelector(`.${className}`)) return;
+
+	const icon = document.createElement("div");
+	icon.classList.add(className);
+	o.setIcon(icon, iconName);
+	titleContainerEl.prepend(icon);
+};
+
+const removeIconFromViewTitle = (
+	{ titleContainerEl }: o.MarkdownView,
+	iconName: string,
+) => {
+	const className = getTitleIconClassName(iconName);
+	titleContainerEl.querySelector(`.${className}`)?.remove();
+};
+
 const maybeShowPasswordPromptForLeaf = (
 	plugin: ProtectNotePlugin,
 	leaf: MarkdownLeaf,
@@ -70,10 +93,12 @@ const maybeShowPasswordPromptForLeaf = (
 	const metadata = plugin.app.metadataCache.getFileCache(leaf.view.file);
 	const pw = metadata?.frontmatter?.protected;
 	if (pw) {
+		addIconToViewTitle(leaf.view, "lock");
 		if (shouldShowPasswordPrompt) {
 			showPasswordPromptForLeaf(plugin, leaf, pw, shouldFocus);
 		}
 	} else {
+		removeIconFromViewTitle(leaf.view, "lock");
 		removePasswordPromptForView(leaf.view);
 		leaf.view.editor.focus();
 	}
