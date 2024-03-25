@@ -10,3 +10,6 @@ export const onceOnFileOpen = (
 	};
 	app.workspace.on("file-open", wrappedCb);
 };
+
+export const waitForFileOpenToFireOnce = (app: o.App) =>
+	new Promise<void>((res) => onceOnFileOpen(app, () => res()));

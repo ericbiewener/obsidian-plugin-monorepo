@@ -1,0 +1,10 @@
+{
+	"id": "restore-cursor-and-scroll-position",
+	"name": "Restore Cursor and Scroll Position",
+	"version": "1.3.0",
+	"minAppVersion": "0.12.0",
+	"description": "Restore last cursor and scroll position for a given note.",
+	"author": "Eric Biewener",
+	"authorUrl": "https://github.com/ericbiewener",
+	"isDesktopOnly": false
+}

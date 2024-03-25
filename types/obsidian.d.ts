@@ -39,4 +39,8 @@ declare module "obsidian" {
 		titleParentEl: HTMLElement;
 		titleContainerEl: HTMLElement;
 	}
+
+	export interface Editor {
+		_cursorAndScroll?: true;
+	}
 }
