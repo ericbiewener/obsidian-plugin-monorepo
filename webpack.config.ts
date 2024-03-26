@@ -27,7 +27,7 @@ const plugins = [
 	"better-command-palette",
 	"better-file-switcher",
 	"protect-note",
-	"restore-cursor-and-scroll-position",
+	"restore-selection-and-scroll-position",
 	"insert-text-modal",
 	"utils",
 ] as const;
@@ -132,7 +132,7 @@ const pluginToVault: Record<Plugin, string[]> = {
 	"better-command-palette": allVaults,
 	"better-file-switcher": allVaults,
 	"protect-note": [paths.vaults.personal],
-	"restore-cursor-and-scroll-position": allVaults,
+	"restore-selection-and-scroll-position": allVaults,
 	"insert-text-modal": allVaults,
 	utils: allVaults,
 };

@@ -1,7 +1,9 @@
+import { EditorView } from "@codemirror/view";
 import * as o from "obsidian";
+import { MarkdownLeaf } from "../src/types/obsidian";
 
 declare module "obsidian" {
-	export interface App {
+	interface App {
 		commands: {
 			commands: Record<string, o.Command>;
 			// Not visible when logging `app.commands` to the console
@@ -15,16 +17,16 @@ declare module "obsidian" {
 		};
 	}
 
-	export type PluginInstance = {
+	type PluginInstance = {
 		id: string;
 	};
 
-	export type InstalledPlugin = {
+	type InstalledPlugin = {
 		enabled: boolean;
 		instance: PluginInstance;
 	};
 
-	export type InternalPlugins = {
+	type InternalPlugins = {
 		plugins: Record<string, InstalledPlugin>;
 		getPluginById(id: string): InstalledPlugin;
 		getEnabledPluginById(id: string): PluginInstance;
@@ -34,13 +36,26 @@ declare module "obsidian" {
 		internalPlugins: InternalPlugins;
 	}
 
-	export interface MarkdownView {
+	interface MarkdownView {
 		titleEl: HTMLElement;
 		titleParentEl: HTMLElement;
 		titleContainerEl: HTMLElement;
 	}
 
-	export interface Editor {
-		_cursorAndScroll?: true;
+	interface Editor {
+		cm: EditorView;
+	}
+
+	interface Workspace {
+		on(
+			name: "file-opened",
+			callback: (leaf: MarkdownLeaf) => any,
+			ctx?: any,
+		): EventRef;
+		on(
+			name: "leaf-created",
+			callback: (leaf: MarkdownLeaf) => any,
+			ctx?: any,
+		): EventRef;
 	}
 }
