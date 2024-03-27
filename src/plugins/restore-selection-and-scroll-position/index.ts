@@ -1,6 +1,6 @@
 import debounce from "debounce";
 import * as o from "obsidian";
-import { waitForFileOpenToFireOnce } from "../../utils/obsidian/workspace/once-on-file-open";
+import { waitForEventToFireOnce } from "../../utils/obsidian/workspace/once-on-workspace-event";
 import { restoreScrollChanges, trackScrollChanges } from "./scroll";
 import { restoreSelectionChanges, trackSelectionChanges } from "./selection";
 
@@ -13,12 +13,13 @@ type Data = Record<
 >;
 
 const loadData = async (plugin: RestoreSelectionAndScrollPositionPlugin) => {
+	const { app } = plugin;
 	const [loadedData] = await Promise.all([
 		plugin.loadData(),
-		waitForFileOpenToFireOnce(plugin.app),
+		waitForEventToFireOnce(app, "file-open"),
 	]);
 	plugin.data = loadedData || { positions: {} };
-	for (const file of plugin.app.vault.getMarkdownFiles()) {
+	for (const file of app.vault.getMarkdownFiles()) {
 		const pos = plugin.data[file.path];
 		if (pos) {
 			plugin.data[file.path] = pos;

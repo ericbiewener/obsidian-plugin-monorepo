@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { onceOnFileOpen } from "../../utils/obsidian/workspace/once-on-file-open";
+import { onceOnWorkspaceEvent } from "../../utils/obsidian/workspace/once-on-workspace-event";
 import {
 	addOpenFileSuggestModalCmd,
 	openFileSuggestModal,
@@ -11,7 +11,7 @@ import {
 export const cleanupFileHistory = (plugin: BetterFileSwitcherPlugin) => {
 	const { app, data } = plugin;
 	// Do this on `fileOpen` to ensure vault is fully loaded
-	onceOnFileOpen(app, () => {
+	onceOnWorkspaceEvent(app, "file-open", () => {
 		const files = app.vault.getMarkdownFiles();
 		data.fileHistory = data.fileHistory.filter((f) =>
 			files.some((file) => f === file.path),

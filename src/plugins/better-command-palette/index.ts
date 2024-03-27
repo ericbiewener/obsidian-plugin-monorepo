@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { onceOnFileOpen } from "../../utils/obsidian/workspace/once-on-file-open";
+import { onceOnWorkspaceEvent } from "../../utils/obsidian/workspace/once-on-workspace-event";
 import {
 	addOpenCmdSuggestModalCmd,
 	openCmdSuggestModal,
@@ -8,7 +8,7 @@ import {
 export const cleanupCmdHistory = (plugin: BetterCommandPalettePlugin) => {
 	const { app, data } = plugin;
 	// Do this on `fileOpen` to ensure vault is fully loaded
-	onceOnFileOpen(app, () => {
+	onceOnWorkspaceEvent(app, "file-open", () => {
 		const cmds = app.commands.commands;
 		data.cmdHistory = data.cmdHistory.filter((id) => cmds[id]);
 		plugin.saveData(data);
@@ -34,6 +34,6 @@ export default class BetterCommandPalettePlugin extends o.Plugin {
 		addOpenCmdSuggestModalCmd(this);
 	}
 
-	openCmdSuggestModal = (onChooseSuggestion: (cmd: o.Command) => void) =>
+	openCmdSuggestModal = (onChooseSuggestion?: (cmd: o.Command) => void) =>
 		openCmdSuggestModal(this, onChooseSuggestion);
 }

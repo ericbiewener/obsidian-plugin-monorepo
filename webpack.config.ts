@@ -29,6 +29,7 @@ const plugins = [
 	"protect-note",
 	"restore-selection-and-scroll-position",
 	"insert-text-modal",
+	"customize-mobile-navbar",
 	"utils",
 ] as const;
 
@@ -134,6 +135,7 @@ const pluginToVault: Record<Plugin, string[]> = {
 	"protect-note": [paths.vaults.personal],
 	"restore-selection-and-scroll-position": allVaults,
 	"insert-text-modal": allVaults,
+	"customize-mobile-navbar": allVaults,
 	utils: allVaults,
 };
 
