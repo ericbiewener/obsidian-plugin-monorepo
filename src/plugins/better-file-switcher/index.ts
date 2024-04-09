@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { onceOnWorkspaceEvent } from "../../utils/obsidian/workspace/once-on-workspace-event";
+import { waitForUtilsPluginInit } from "../../utils/obsidian/wait-for-utils-plugin-init";
 import {
 	addOpenFileSuggestModalCmd,
 	openFileSuggestModal,
@@ -8,10 +8,11 @@ import {
 /**
  * Delete files from history that no longer exist in the vault
  */
-export const cleanupFileHistory = (plugin: BetterFileSwitcherPlugin) => {
+export const cleanupFileHistory = async (plugin: BetterFileSwitcherPlugin) => {
 	const { app, data } = plugin;
+	const utils = await waitForUtilsPluginInit(app);
 	// Do this on `fileOpen` to ensure vault is fully loaded
-	onceOnWorkspaceEvent(app, "file-open", () => {
+	utils.onceOnWorkspaceEvent(app, "file-open", () => {
 		const files = app.vault.getMarkdownFiles();
 		data.fileHistory = data.fileHistory.filter((f) =>
 			files.some((file) => f === file.path),

@@ -2,9 +2,7 @@ import * as o from "obsidian";
 import { addCommand } from "../../add-command";
 import { CLICK_VERB } from "../../contants";
 import baseStyle from "../../styles/base.module.css";
-import { onKey } from "../../utils/dom/on-key";
 import { getUtils } from "../../utils/obsidian/get-plugin";
-import { createFile } from "../../utils/obsidian/vault/create-file";
 import BetterFileSwitcherPlugin from "./index";
 import style from "./style/style.module.css";
 
@@ -35,7 +33,7 @@ const createFileFromInput = async (
 ) => {
 	const basename = modal.inputEl.value.trim();
 	if (basename) {
-		await createFile(app, `${basename}.md`);
+		await getUtils(app).createFile(app, `${basename}.md`);
 		modal.close();
 	}
 };
@@ -66,12 +64,12 @@ export const openFileSuggestModal = (
 	plugin: BetterFileSwitcherPlugin,
 	onChooseSuggestion?: (file: o.TFile) => void,
 ) => {
-	const modal = getUtils(plugin.app).openFileSuggestModal(plugin, {
+	const { app } = plugin;
+	const modal = getUtils(app).openFileSuggestModal(plugin, {
 		getFiles: getFilesByLastOpened,
 		onChooseSuggestion:
 			onChooseSuggestion ||
-			((file: o.TFile) =>
-				plugin.app.workspace.openLinkText(file.path, "", false)),
+			((file: o.TFile) => app.workspace.openLinkText(file.path, "", false)),
 
 		onNoSuggestion: (modal) => {
 			createNoResultsEl(modal, createFileCb, createFileOnEnter);
@@ -79,7 +77,7 @@ export const openFileSuggestModal = (
 	});
 
 	const createFileCb = () => createFileFromInput(plugin, modal);
-	const createFileOnEnter = onKey({ Enter: createFileCb });
+	const createFileOnEnter = getUtils(app).onKey({ Enter: createFileCb });
 
 	addNewFileButtonToModal(plugin, modal, createFileCb);
 };

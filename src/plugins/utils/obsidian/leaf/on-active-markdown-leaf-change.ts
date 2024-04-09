@@ -1,6 +1,6 @@
 import * as o from "obsidian";
-import { MarkdownLeaf } from "../../types/obsidian";
-import { isMarkdownLeaf } from "../../utils/obsidian/is-markdown-leaf";
+import { MarkdownLeaf } from "../../../../types/obsidian";
+import { isMarkdownLeaf } from "../../type-guards/is-markdown-leaf";
 
 export const onActiveMarkdownLeafChange = (
 	app: o.App,

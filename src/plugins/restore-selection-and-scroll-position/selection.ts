@@ -1,5 +1,4 @@
 import { getUtils } from "../../utils/obsidian/get-plugin";
-import { getActiveView } from "../../utils/obsidian/workspace/get-active-view";
 import RestoreSelectionAndScrollPositionPlugin from "./index";
 
 export const trackSelectionChanges = (
@@ -20,7 +19,7 @@ export const trackSelectionChanges = (
 		const selection = document.getSelection();
 		if (!selection?.anchorNode) return;
 
-		const view = getActiveView(app);
+		const view = utils.getActiveView(app);
 		view?.leaf;
 		if (!view) return;
 

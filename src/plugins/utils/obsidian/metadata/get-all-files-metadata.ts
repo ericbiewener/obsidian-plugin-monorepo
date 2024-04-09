@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { isDefined } from "../../../../utils/is-defined";
+import { isDefined } from "../../type-guards/is-defined";
 
 export const getAllFilesMetadata = (app: o.App) =>
 	app.vault

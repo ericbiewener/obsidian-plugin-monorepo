@@ -1,9 +1,7 @@
 import formatDate from "date-fns/format";
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { getEditor } from "../../utils/obsidian/editor/get-editor";
-import { getFirstLine } from "../../utils/obsidian/editor/get-first-line";
-import { getActiveFileMetadata } from "../../utils/obsidian/metadata/get-active-file-metadata";
+import { getUtils } from "../../utils/obsidian/get-plugin";
 
 const TIME_HEADER = "###";
 
@@ -16,9 +14,10 @@ const setAndScrollToCursor = (editor: o.Editor, line: number) => {
 };
 
 const insertDateAndTimeHeader = (app: o.App, dateStr: string) => {
-	const editor = getEditor(app);
+	const utils = getUtils(app);
+	const editor = utils.getEditor(app);
 	editor.replaceRange(`# ${dateStr}\n\n${getTimeHeaderStr()}`, {
-		line: getFirstLine(editor),
+		line: utils.getFirstLine(editor),
 		ch: 0,
 	});
 	setAndScrollToCursor(editor, 4);
@@ -29,7 +28,7 @@ const insertTimeHeader = (
 	headings: o.HeadingCache[],
 	dateHeading: o.HeadingCache,
 ) => {
-	const editor = getEditor(app);
+	const editor = getUtils(app).getEditor(app);
 	const dateHeadingIdx = headings.indexOf(dateHeading);
 	const nextHeading = headings[dateHeadingIdx + 1];
 	const line =
@@ -42,14 +41,14 @@ const insertTimeHeader = (
 
 const insertDateHeading = async ({ app }: o.Plugin) => {
 	const dateStr = formatDate(new Date(), "MMM d, yyyy");
-	const headings = getActiveFileMetadata(app)?.headings || [];
+	const headings = getUtils(app).getActiveFileMetadata(app)?.headings || [];
 	const dateHeading = headings.find((h) => h.level === 1);
 	if (dateHeading?.heading !== dateStr) {
 		insertDateAndTimeHeader(app, dateStr);
 	} else {
 		insertTimeHeader(app, headings, dateHeading);
 	}
-	getEditor(app).focus();
+	getUtils(app).getEditor(app).focus();
 };
 
 export const addInsertDateHeadingCmd = addCommand(

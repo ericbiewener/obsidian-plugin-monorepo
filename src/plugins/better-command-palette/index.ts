@@ -1,14 +1,15 @@
 import * as o from "obsidian";
-import { onceOnWorkspaceEvent } from "../../utils/obsidian/workspace/once-on-workspace-event";
+import { waitForUtilsPluginInit } from "../../utils/obsidian/wait-for-utils-plugin-init";
 import {
 	addOpenCmdSuggestModalCmd,
 	openCmdSuggestModal,
 } from "./command-palette";
 
-export const cleanupCmdHistory = (plugin: BetterCommandPalettePlugin) => {
+export const cleanupCmdHistory = async (plugin: BetterCommandPalettePlugin) => {
 	const { app, data } = plugin;
+	const utils = await waitForUtilsPluginInit(app);
 	// Do this on `fileOpen` to ensure vault is fully loaded
-	onceOnWorkspaceEvent(app, "file-open", () => {
+	utils.onceOnWorkspaceEvent(app, "file-open", () => {
 		const cmds = app.commands.commands;
 		data.cmdHistory = data.cmdHistory.filter((id) => cmds[id]);
 		plugin.saveData(data);

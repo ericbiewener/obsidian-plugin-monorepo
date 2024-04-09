@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { getMarkdownLeaves } from "../../../utils/obsidian/workspace/get-markdown-leaves";
+import { getMarkdownLeaves } from "./get-markdown-leaves";
 
 export const trackOpenFiles = (app: o.App) => {
 	let openPaths: string[] = [];

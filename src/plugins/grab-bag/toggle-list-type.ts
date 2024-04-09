@@ -1,11 +1,11 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { getEditor } from "../../utils/obsidian/editor/get-editor";
+import { getUtils } from "../../utils/obsidian/get-plugin";
 
 const unorderedListItem = /^(\s*)-( .*)/;
 
 const toggleListType = async ({ app }: o.Plugin) => {
-	const editor = getEditor(app);
+	const editor = getUtils(app).getEditor(app);
 	const lineNo = editor.getCursor("from").line;
 	const line = editor.getLine(lineNo);
 

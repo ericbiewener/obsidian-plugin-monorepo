@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { isList } from "./syntax";
+import { isList } from "../../string/syntax";
 
 const getIndentationLevel = (line: string) =>
 	line.length - line.trimStart().length;

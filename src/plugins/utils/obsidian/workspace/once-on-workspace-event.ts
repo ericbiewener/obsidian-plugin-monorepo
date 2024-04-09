@@ -1,7 +1,7 @@
 import * as o from "obsidian";
-import { NarrowOverloadUnion } from "../../types/narrow-overload-union";
-import { FirstArgUnion } from "../../types/nth-arg-union";
-import { OverloadsToUnion } from "../../types/overloads-to-union";
+import { NarrowOverloadUnion } from "../../../../utils/types/narrow-overload-union";
+import { FirstArgUnion } from "../../../../utils/types/nth-arg-union";
+import { OverloadsToUnion } from "../../../../utils/types/overloads-to-union";
 
 type Overloads = OverloadsToUnion<o.Workspace["on"]>;
 type EventNames = FirstArgUnion<Overloads>;

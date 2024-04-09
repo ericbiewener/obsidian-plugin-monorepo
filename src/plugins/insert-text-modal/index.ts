@@ -1,16 +1,14 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { getEditor } from "../../utils/obsidian/editor/get-editor";
 import { getUtils } from "../../utils/obsidian/get-plugin";
 import style from "./style/style.module.css";
 
 const openInsertTextModal = async ({ app }: InsertTextModalPlugin) => {
 	const utils = getUtils(app);
-	const editor = getEditor(app);
+	const editor = utils.getEditor(app);
 	const modal = new o.Modal(app);
 	modal.titleEl.appendChild(utils.createIcon("close", modal.close));
 	modal.titleEl.style.display = "flex";
-	// modal.titleEl.style.justifyContent = "ju";
 
 	const textarea = modal.contentEl.createEl("textarea", {
 		cls: style.textarea,

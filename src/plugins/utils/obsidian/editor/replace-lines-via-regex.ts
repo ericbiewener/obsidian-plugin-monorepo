@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { getFullLineRange } from "../range/get-full-line-range";
+import { getFullLineRange } from "../range-pos/get-full-line-range";
 
 type Replacer = (substring: string, ...args: any[]) => string;
 

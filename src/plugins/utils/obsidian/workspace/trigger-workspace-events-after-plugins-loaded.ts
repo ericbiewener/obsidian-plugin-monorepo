@@ -1,6 +1,6 @@
 import * as o from "obsidian";
-import { getMarkdownLeaves } from "../../../utils/obsidian/workspace/get-markdown-leaves";
-import { sleep } from "../async/sleep";
+import { getUtils } from "../../../../utils/obsidian/get-plugin";
+import { sleep } from "../../async/sleep";
 
 declare module "obsidian" {
 	interface Plugin {
@@ -25,9 +25,8 @@ async function waitForPluginsToLoad(app: o.App) {
 export const triggerWorkspaceEventsAfterPluginsLoaded = async (app: o.App) => {
 	await waitForPluginsToLoad(app);
 	app.workspace.trigger("layout-change");
-	console.info(`::`, "triggering");
 
-	for (const leaf of getMarkdownLeaves(app)) {
+	for (const leaf of getUtils(app).getMarkdownLeaves(app)) {
 		app.workspace.trigger("leaf-created", leaf);
 		app.workspace.trigger("file-opened", leaf);
 	}

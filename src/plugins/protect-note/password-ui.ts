@@ -1,7 +1,7 @@
 import * as o from "obsidian";
 import { MarkdownLeaf } from "../../types/obsidian";
-import { onUtilsPluginInit } from "../../utils/obsidian/on-utils-plugin-init";
-import { getMarkdownLeaves } from "../../utils/obsidian/workspace/get-markdown-leaves";
+import { getUtils } from "../../utils/obsidian/get-plugin";
+import { waitForUtilsPluginInit } from "../../utils/obsidian/wait-for-utils-plugin-init";
 import ProtectNotePlugin from "./index";
 import style from "./style/style.module.css";
 
@@ -29,7 +29,7 @@ const removePasswordPromptForView = (view: o.View) => {
 };
 
 const removePasswordPrompts = ({ app }: ProtectNotePlugin) => {
-	for (const leaf of getMarkdownLeaves(app)) {
+	for (const leaf of getUtils(app).getMarkdownLeaves(app)) {
 		removePasswordPromptForView(leaf.view);
 	}
 };
@@ -104,33 +104,32 @@ const maybeShowPasswordPromptForLeaf = (
 	}
 };
 
-export const onActiveLeafChange = (plugin: ProtectNotePlugin) => {
+export const onActiveLeafChange = async (plugin: ProtectNotePlugin) => {
 	const { app } = plugin;
 	let needsToCheckOtherLeaves = true;
 
-	onUtilsPluginInit(app, (utils) => {
-		utils.onActiveMarkdownLeafChange(app, (leaf) => {
-			if (!needsToCheckOtherLeaves) {
+	const utils = await waitForUtilsPluginInit(app);
+
+	utils.onActiveMarkdownLeafChange(app, (leaf) => {
+		if (!needsToCheckOtherLeaves) {
+			maybeShowPasswordPromptForLeaf(plugin, leaf, true);
+		} else {
+			// The app was just open, need to check all open leaves
+			needsToCheckOtherLeaves = false;
+			for (const leaf of utils.getMarkdownLeaves(app)) {
 				maybeShowPasswordPromptForLeaf(plugin, leaf, true);
-			} else {
-				// The app was just open, need to check all open leaves
-				needsToCheckOtherLeaves = false;
-				for (const leaf of getMarkdownLeaves(app)) {
-					maybeShowPasswordPromptForLeaf(plugin, leaf, true);
-				}
 			}
-		});
+		}
 	});
 };
 
-export const onUserInactive = (plugin: ProtectNotePlugin) => {
+export const onUserInactive = async (plugin: ProtectNotePlugin) => {
 	const { app } = plugin;
-	onUtilsPluginInit(app, (utils) => {
-		utils.onUserInactive(() => {
-			shouldShowPasswordPrompt = true;
-			for (const leaf of getMarkdownLeaves(app)) {
-				maybeShowPasswordPromptForLeaf(plugin, leaf);
-			}
-		});
+	const utils = await waitForUtilsPluginInit(app);
+	utils.onUserInactive(() => {
+		shouldShowPasswordPrompt = true;
+		for (const leaf of utils.getMarkdownLeaves(app)) {
+			maybeShowPasswordPromptForLeaf(plugin, leaf);
+		}
 	});
 };

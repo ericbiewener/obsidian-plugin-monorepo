@@ -1,5 +1,5 @@
 import * as o from "obsidian";
-import { MarkdownLeaf } from "../../types/obsidian";
+import { MarkdownLeaf } from "../../../types/obsidian";
 
 export const isMarkdownLeaf = (
 	leaf: o.WorkspaceLeaf | MarkdownLeaf,

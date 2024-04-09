@@ -1,6 +1,6 @@
 import * as o from "obsidian";
 import { getPlugin } from "../../utils/obsidian/get-plugin";
-import { onceOnWorkspaceEvent } from "../../utils/obsidian/workspace/once-on-workspace-event";
+import { waitForUtilsPluginInit } from "../../utils/obsidian/wait-for-utils-plugin-init";
 
 const createButton = (icon: string, cb: () => unknown) => {
 	const div = document.createElement("div");
@@ -15,7 +15,8 @@ export default class CustomizeMobileNavbarPlugin extends o.Plugin {
 	async onload() {
 		const { app } = this;
 
-		onceOnWorkspaceEvent(app, "layout-change", () => {
+		const utils = await waitForUtilsPluginInit(app);
+		utils.onceOnWorkspaceEvent(app, "layout-change", () => {
 			const actions = document.querySelector<HTMLElement>(
 				".mobile-navbar-actions",
 			);

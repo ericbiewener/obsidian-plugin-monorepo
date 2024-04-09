@@ -1,7 +1,5 @@
 import * as o from "obsidian";
 import { addCommand } from "../../add-command";
-import { unique } from "../../utils/collections/unique";
-import { isDefined } from "../../utils/is-defined";
 import { getUtils } from "../../utils/obsidian/get-plugin";
 import BetterCommandPalettePlugin from "./index";
 
@@ -27,9 +25,10 @@ const executeAndSaveCmd = async (
 const getCmds = ({ app, data }: BetterCommandPalettePlugin) => {
 	const { cmdHistory } = data;
 	const { commands } = app.commands;
+	const utils = getUtils(app);
 
-	return unique([
-		...cmdHistory.map((c) => commands[c]).filter(isDefined),
+	return getUtils(app).unique([
+		...cmdHistory.map((c) => commands[c]).filter(utils.isDefined),
 		...Object.values(app.commands.commands),
 	]);
 };

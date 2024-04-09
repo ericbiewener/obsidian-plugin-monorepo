@@ -1,6 +1,6 @@
 import * as o from "obsidian";
-import { MarkdownLeaf } from "../../../types/obsidian";
-import { getMarkdownLeaves } from "../../../utils/obsidian/workspace/get-markdown-leaves";
+import { MarkdownLeaf } from "../../../../types/obsidian";
+import { getMarkdownLeaves } from "./get-markdown-leaves";
 
 export const trackLeaves = (app: o.App) => {
 	let leaves: MarkdownLeaf[] = [];

@@ -5,7 +5,7 @@ import chalk from "chalk";
 import fse from "fs-extra";
 import TerserPlugin from "terser-webpack-plugin";
 import { Compiler, Configuration } from "webpack";
-import { assert } from "./src/utils/assert";
+import { assert } from "./src/plugins/utils/assert";
 
 const isProd = process.env.NODE_ENV === "production";
 
