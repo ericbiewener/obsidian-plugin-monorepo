@@ -8,7 +8,7 @@ import { removeFileExt } from "../string/remove-file-ext";
 import style from "./style/header-suggest-modal.module.css";
 
 type Opts<P extends o.Plugin> = {
-	onChooseSuggestion: (FileHeader: FileHeader) => any;
+	onChooseSuggestion: (FileHeader: FileHeader) => void;
 };
 
 class HeaderSuggestModal<
