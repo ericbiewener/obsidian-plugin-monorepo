@@ -1,0 +1,8 @@
+.suggestionItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.textMuted {
+  color: var(--text-muted);
+}

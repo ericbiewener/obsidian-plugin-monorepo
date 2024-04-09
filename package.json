@@ -16,7 +16,6 @@
     "format": "pnpm biome:all && pnpm prettier:all",
     "prepare": "husky install",
     "gen:plugin": "tsx src/plugin-generator/index.ts",
-    "gen:icons": "tsx scripts/generate-icons.bin.ts",
     "gen:style-types": "tcm src"
   },
   "keywords": [],

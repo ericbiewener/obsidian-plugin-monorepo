@@ -1,6 +1,6 @@
 declare const styles: {
-  readonly "iconName": string;
   readonly "suggestionItem": string;
+  readonly "textMuted": string;
 };
 export = styles;
 

@@ -11,6 +11,7 @@ import {
 import { onActiveMarkdownLeafChange } from "./on-active-markdown-leaf-change";
 import { openCmdSuggestModal } from "./suggest-modals/cmd-suggest-modal";
 import { openFileSuggestModal } from "./suggest-modals/file-suggest-modal";
+import { openHeaderSuggestModal } from "./suggest-modals/header-suggest-modal";
 import * as syntax from "./syntax";
 import { createIcon } from "./ui/create-icon";
 import { trackLeaves } from "./workspace/track-leaves";
@@ -35,6 +36,7 @@ export default class UtilsPlugin extends o.Plugin {
 	createIcon = createIcon;
 	openCmdSuggestModal = openCmdSuggestModal;
 	openFileSuggestModal = openFileSuggestModal;
+	openHeaderSuggestModal = openHeaderSuggestModal;
 
 	// collections
 	objGetOrSet = objGetOrSet;

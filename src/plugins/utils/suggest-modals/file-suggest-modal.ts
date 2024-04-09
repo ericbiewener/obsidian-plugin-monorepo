@@ -1,5 +1,6 @@
 import { filter } from "fuzzy";
 import * as o from "obsidian";
+import { removeFileExt } from "../string/remove-file-ext";
 
 type Opts<P extends o.Plugin> = {
 	onChooseSuggestion: (file: o.TFile) => void;
@@ -41,7 +42,7 @@ class FileSuggestModal<P extends o.Plugin> extends o.SuggestModal<o.TFile> {
 }
 
 const getFileSuggestionHTML = (file: o.TFile) =>
-	file.path.replace(/\.md$/, "").split("/").join("<strong> / </strong>");
+	removeFileExt(file.path).split("/").join("<strong> / </strong>");
 
 export const openFileSuggestModal = <P extends o.Plugin>(
 	plugin: P,
