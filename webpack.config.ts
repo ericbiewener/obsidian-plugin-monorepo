@@ -32,7 +32,6 @@ const plugins = [
 	"insert-text-modal",
 	"customize-mobile-navbar",
 	"utils",
-	"macros",
 ] as const;
 
 type Plugin = (typeof plugins)[number];
@@ -140,7 +139,6 @@ const pluginToVault: Record<Plugin, string[]> = {
 	"insert-text-modal": allVaults,
 	"customize-mobile-navbar": allVaults,
 	utils: allVaults,
-	macros: [paths.vaults.personal],
 };
 
 const preBuild = () => {
