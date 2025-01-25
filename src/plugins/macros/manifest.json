@@ -1,0 +1,10 @@
+{
+	"id": "macros",
+	"name": "Macros",
+	"version": "1.4.0",
+	"minAppVersion": "0.12.0",
+	"description": "Automate all the things!",
+	"author": "Eric Biewener",
+	"authorUrl": "https://github.com/ericbiewener",
+	"isDesktopOnly": false
+}
