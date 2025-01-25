@@ -1,4 +1,5 @@
 import * as o from "obsidian";
+import { isDefined } from "../../type-guards/is-defined";
 import { getMarkdownLeaves } from "./get-markdown-leaves";
 
 export const trackOpenFiles = (app: o.App) => {
@@ -10,7 +11,7 @@ export const trackOpenFiles = (app: o.App) => {
 		const leavesWithNewFiles = leaves.filter(
 			(l) => !openPaths.includes(l.view.file.path),
 		);
-		openPaths = leaves.map((p) => p.view.file.path);
+		openPaths = leaves.map((p) => p.view.file?.path).filter(isDefined);
 
 		for (const leaf of leavesWithNewFiles) {
 			app.workspace.trigger("file-opened", leaf);
