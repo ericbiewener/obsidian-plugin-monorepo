@@ -1,6 +1,11 @@
 import * as o from "obsidian";
 import type { Entry } from "./parse-entries";
 
+const moodColor = (mood: number) => {
+	const hue = ((mood - 1) / 9) * 120;
+	return `hsl(${hue}, 75%, 35%)`;
+};
+
 export class EntryModal extends o.Modal {
 	constructor(
 		app: o.App,
@@ -13,20 +18,59 @@ export class EntryModal extends o.Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		contentEl.createEl("h2", { text: this.date });
+		const heading = contentEl.createEl("h2", { text: this.date });
+		heading.style.marginTop = "0";
+
+		let selectedMood: number | undefined = this.existing?.mood;
 
 		const moodRow = contentEl.createEl("div");
 		moodRow.style.marginBottom = "12px";
-		moodRow.createEl("label", { text: "Mood (1–10)" });
 		moodRow.style.display = "flex";
 		moodRow.style.flexDirection = "column";
-		moodRow.style.gap = "4px";
-		const moodInput = moodRow.createEl("input");
-		moodInput.type = "number";
-		moodInput.min = "1";
-		moodInput.max = "10";
-		moodInput.value = this.existing ? String(this.existing.mood) : "";
-		moodInput.style.width = "80px";
+		moodRow.style.gap = "8px";
+		moodRow.createEl("label", { text: "Mood" });
+
+		const swatchRow = moodRow.createEl("div");
+		swatchRow.style.display = "flex";
+		swatchRow.style.flexWrap = "wrap";
+		swatchRow.style.gap = "6px";
+
+		const swatches: HTMLElement[] = [];
+		for (let i = 1; i <= 10; i++) {
+			const swatch = swatchRow.createEl("div");
+			swatch.style.width = "32px";
+			swatch.style.height = "32px";
+			swatch.style.borderRadius = "50%";
+			swatch.style.backgroundColor = moodColor(i);
+			swatch.style.cursor = "pointer";
+			swatch.style.display = "flex";
+			swatch.style.alignItems = "center";
+			swatch.style.justifyContent = "center";
+			swatch.style.color = "#fff";
+			swatch.style.fontSize = "11px";
+			swatch.style.fontWeight = "700";
+			swatch.style.transition = "transform 0.1s";
+			swatch.style.flexShrink = "0";
+			swatch.setText(String(i));
+			swatches.push(swatch);
+		}
+
+		const selectMood = (mood: number) => {
+			selectedMood = mood;
+			swatchRow.style.outline = "none";
+			swatches.forEach((s, idx) => {
+				const active = idx + 1 === mood;
+				s.style.outline = active ? "2px solid var(--text-normal)" : "none";
+				s.style.outlineOffset = "2px";
+				s.style.transform = active ? "scale(1.2)" : "scale(1)";
+			});
+		};
+
+		swatches.forEach((s, idx) =>
+			s.addEventListener("click", () => selectMood(idx + 1)),
+		);
+
+		if (selectedMood !== undefined) selectMood(selectedMood);
 
 		const notesRow = contentEl.createEl("div");
 		notesRow.style.marginBottom = "16px";
@@ -43,17 +87,15 @@ export class EntryModal extends o.Modal {
 		const saveBtn = contentEl.createEl("button", { text: "Save" });
 		saveBtn.style.marginTop = "4px";
 		saveBtn.addEventListener("click", () => {
-			const mood = parseInt(moodInput.value, 10);
-			if (Number.isNaN(mood) || mood < 1 || mood > 10) {
-				moodInput.style.borderColor = "var(--color-red)";
-				moodInput.focus();
+			if (selectedMood === undefined) {
+				swatchRow.style.outline = "2px solid var(--color-red)";
+				swatchRow.style.outlineOffset = "4px";
+				swatchRow.style.borderRadius = "4px";
 				return;
 			}
-			this.onSave({ mood, notes: notesInput.value.trim() });
+			this.onSave({ mood: selectedMood, notes: notesInput.value.trim() });
 			this.close();
 		});
-
-		moodInput.focus();
 	}
 
 	onClose() {

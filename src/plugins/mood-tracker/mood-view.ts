@@ -21,9 +21,15 @@ export class MoodView extends o.ItemView {
 		this.month = now.getMonth();
 	}
 
-	getViewType = () => MOOD_VIEW_TYPE;
-	getDisplayText = () => "Mood Tracker";
-	getIcon = () => "calendar-days";
+	getViewType() {
+		return MOOD_VIEW_TYPE;
+	}
+	getDisplayText() {
+		return "Mood Tracker";
+	}
+	getIcon() {
+		return "calendar-days";
+	}
 
 	async onOpen() {
 		this.addAction("pencil", "Edit as markdown", () => {
