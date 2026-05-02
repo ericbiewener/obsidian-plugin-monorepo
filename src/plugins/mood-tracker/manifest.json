@@ -1,0 +1,10 @@
+{
+	"id": "mood-tracker",
+	"name": "Mood Tracker",
+	"version": "1.0.0",
+	"minAppVersion": "0.12.0",
+	"description": "Calendar view for tracking daily mood in a designated note",
+	"author": "Eric Biewener",
+	"authorUrl": "https://github.com/ericbiewener",
+	"isDesktopOnly": false
+}
