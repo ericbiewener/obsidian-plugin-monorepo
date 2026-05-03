@@ -1,10 +1,7 @@
 import * as o from "obsidian";
 import type { Entry } from "./parse-entries";
 
-const moodColor = (mood: number) => {
-	const hue = ((mood - 1) / 9) * 120;
-	return `hsl(${hue}, 75%, 35%)`;
-};
+import { moodColor } from "./mood-color";
 
 export class EntryModal extends o.Modal {
 	constructor(

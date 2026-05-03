@@ -1,3 +1,4 @@
+import { moodColor } from "./mood-color";
 import type { Entry } from "./parse-entries";
 import style from "./style/style.module.css";
 
@@ -16,9 +17,6 @@ const MONTHS = [
 	"November",
 	"December",
 ];
-
-const moodColor = (mood: number) =>
-	mood <= 3 ? "#c0392b" : mood <= 6 ? "#e67e22" : "#27ae60";
 
 const formatDate = (year: number, month: number, day: number) => {
 	const m = String(month + 1).padStart(2, "0");
