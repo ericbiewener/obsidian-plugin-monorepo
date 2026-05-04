@@ -33,7 +33,7 @@ export class EntryModal extends o.Modal {
 		swatchRow.style.gap = "6px";
 
 		const swatches: HTMLElement[] = [];
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 1; i <= 9; i++) {
 			const swatch = swatchRow.createEl("div");
 			swatch.style.width = "32px";
 			swatch.style.height = "32px";
