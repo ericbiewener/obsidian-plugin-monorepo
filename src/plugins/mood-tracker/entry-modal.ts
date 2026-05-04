@@ -48,7 +48,6 @@ export class EntryModal extends o.Modal {
 			swatch.style.fontWeight = "700";
 			swatch.style.transition = "transform 0.1s";
 			swatch.style.flexShrink = "0";
-			swatch.setText(String(i));
 			swatches.push(swatch);
 		}
 
@@ -77,7 +76,7 @@ export class EntryModal extends o.Modal {
 		notesRow.createEl("label", { text: "Notes" });
 		const notesInput = notesRow.createEl("textarea");
 		notesInput.value = this.existing?.notes ?? "";
-		notesInput.rows = 8;
+		notesInput.rows = 12;
 		notesInput.style.width = "100%";
 		notesInput.style.resize = "vertical";
 
