@@ -8,17 +8,12 @@ export const MOOD_VIEW_TYPE = "mood-tracker";
 
 export class MoodView extends o.ItemView {
 	private file: o.TFile | null = null;
-	private year: number;
-	private month: number;
 
 	constructor(
 		leaf: o.WorkspaceLeaf,
 		private plugin: MoodTrackerPlugin,
 	) {
 		super(leaf);
-		const now = new Date();
-		this.year = now.getFullYear();
-		this.month = now.getMonth();
 	}
 
 	getViewType() {
@@ -61,27 +56,30 @@ export class MoodView extends o.ItemView {
 		if (!this.file) return;
 		const content = await this.app.vault.read(this.file);
 		const entries = parseEntries(content);
-		renderCalendar(
-			this.contentEl,
-			this.year,
-			this.month,
-			entries,
-			() => this.shiftMonth(-1),
-			() => this.shiftMonth(1),
-			(date) => this.openEntryModal(date, entries[date]),
-		);
-	}
 
-	private shiftMonth(delta: number) {
-		this.month += delta;
-		if (this.month < 0) {
-			this.month = 11;
-			this.year--;
-		} else if (this.month > 11) {
-			this.month = 0;
-			this.year++;
+		const now = new Date();
+		const currentKey = `${now.getFullYear()}-${String(
+			now.getMonth() + 1,
+		).padStart(2, "0")}`;
+
+		const monthKeys = new Set(Object.keys(entries).map((d) => d.slice(0, 7)));
+		monthKeys.add(currentKey);
+
+		this.contentEl.empty();
+
+		let currentMonthEl: HTMLElement | null = null;
+		for (const key of [...monthKeys].sort()) {
+			const el = renderCalendar(
+				this.contentEl,
+				parseInt(key.slice(0, 4)),
+				parseInt(key.slice(5, 7)) - 1,
+				entries,
+				(date) => this.openEntryModal(date, entries[date]),
+			);
+			if (key === currentKey) currentMonthEl = el;
 		}
-		this.renderView();
+
+		currentMonthEl?.scrollIntoView();
 	}
 
 	private openEntryModal(date: string, existing: Entry | undefined) {

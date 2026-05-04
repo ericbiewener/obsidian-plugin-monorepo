@@ -73,6 +73,7 @@
 	font-size: 13px;
 	color: var(--text-normal);
 	line-height: 1;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .dayToday .dayNumber {

@@ -29,25 +29,15 @@ export const renderCalendar = (
 	year: number,
 	month: number,
 	entries: Record<string, Entry>,
-	onPrev: () => void,
-	onNext: () => void,
 	onDayClick: (date: string) => void,
-) => {
-	container.empty();
-
+): HTMLElement => {
 	const wrapper = container.createEl("div", { cls: style.wrapper });
 
 	const header = wrapper.createEl("div", { cls: style.header });
-	header
-		.createEl("button", { text: "◀", cls: style.navBtn })
-		.addEventListener("click", onPrev);
 	header.createEl("span", {
 		text: `${MONTHS[month]} ${year}`,
 		cls: style.monthLabel,
 	});
-	header
-		.createEl("button", { text: "▶", cls: style.navBtn })
-		.addEventListener("click", onNext);
 
 	const grid = wrapper.createEl("div", { cls: style.grid });
 
@@ -78,13 +68,18 @@ export const renderCalendar = (
 		cell.createEl("span", { text: String(day), cls: style.dayNumber });
 
 		if (entry) {
-			const scoreEl = cell.createEl("span", {
-				text: String(entry.mood),
-				cls: style.moodScore,
+			const color = moodColor(entry.mood);
+			cell.style.backgroundColor = color;
+			cell.addEventListener("mouseenter", () => {
+				cell.style.filter = "brightness(0.88)";
 			});
-			scoreEl.style.backgroundColor = moodColor(entry.mood);
+			cell.addEventListener("mouseleave", () => {
+				cell.style.filter = "";
+			});
 		}
 
 		cell.addEventListener("click", () => onDayClick(date));
 	}
+
+	return wrapper;
 };
