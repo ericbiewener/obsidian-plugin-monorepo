@@ -77,7 +77,7 @@ export class EntryModal extends o.Modal {
 		notesRow.createEl("label", { text: "Notes" });
 		const notesInput = notesRow.createEl("textarea");
 		notesInput.value = this.existing?.notes ?? "";
-		notesInput.rows = 4;
+		notesInput.rows = 8;
 		notesInput.style.width = "100%";
 		notesInput.style.resize = "vertical";
 
