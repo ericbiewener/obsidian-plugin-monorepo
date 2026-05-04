@@ -1,3 +1,4 @@
+import { moodColor } from "./mood-color";
 import type { Entry } from "./parse-entries";
 import style from "./style/style.module.css";
 
@@ -17,9 +18,6 @@ const MONTHS = [
 	"December",
 ];
 
-const moodColor = (mood: number) =>
-	mood <= 3 ? "#c0392b" : mood <= 6 ? "#e67e22" : "#27ae60";
-
 const formatDate = (year: number, month: number, day: number) => {
 	const m = String(month + 1).padStart(2, "0");
 	const d = String(day).padStart(2, "0");
@@ -31,25 +29,15 @@ export const renderCalendar = (
 	year: number,
 	month: number,
 	entries: Record<string, Entry>,
-	onPrev: () => void,
-	onNext: () => void,
 	onDayClick: (date: string) => void,
-) => {
-	container.empty();
-
+): HTMLElement => {
 	const wrapper = container.createEl("div", { cls: style.wrapper });
 
 	const header = wrapper.createEl("div", { cls: style.header });
-	header
-		.createEl("button", { text: "◀", cls: style.navBtn })
-		.addEventListener("click", onPrev);
 	header.createEl("span", {
 		text: `${MONTHS[month]} ${year}`,
 		cls: style.monthLabel,
 	});
-	header
-		.createEl("button", { text: "▶", cls: style.navBtn })
-		.addEventListener("click", onNext);
 
 	const grid = wrapper.createEl("div", { cls: style.grid });
 
@@ -80,13 +68,18 @@ export const renderCalendar = (
 		cell.createEl("span", { text: String(day), cls: style.dayNumber });
 
 		if (entry) {
-			const scoreEl = cell.createEl("span", {
-				text: String(entry.mood),
-				cls: style.moodScore,
+			const color = moodColor(entry.mood);
+			cell.style.backgroundColor = color;
+			cell.addEventListener("mouseenter", () => {
+				cell.style.filter = "brightness(0.88)";
 			});
-			scoreEl.style.backgroundColor = moodColor(entry.mood);
+			cell.addEventListener("mouseleave", () => {
+				cell.style.filter = "";
+			});
 		}
 
 		cell.addEventListener("click", () => onDayClick(date));
 	}
+
+	return wrapper;
 };

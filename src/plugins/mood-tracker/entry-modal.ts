@@ -1,10 +1,7 @@
 import * as o from "obsidian";
 import type { Entry } from "./parse-entries";
 
-const moodColor = (mood: number) => {
-	const hue = ((mood - 1) / 9) * 120;
-	return `hsl(${hue}, 75%, 35%)`;
-};
+import { moodColor } from "./mood-color";
 
 export class EntryModal extends o.Modal {
 	constructor(
@@ -36,7 +33,7 @@ export class EntryModal extends o.Modal {
 		swatchRow.style.gap = "6px";
 
 		const swatches: HTMLElement[] = [];
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 1; i <= 9; i++) {
 			const swatch = swatchRow.createEl("div");
 			swatch.style.width = "32px";
 			swatch.style.height = "32px";
@@ -80,7 +77,7 @@ export class EntryModal extends o.Modal {
 		notesRow.createEl("label", { text: "Notes" });
 		const notesInput = notesRow.createEl("textarea");
 		notesInput.value = this.existing?.notes ?? "";
-		notesInput.rows = 4;
+		notesInput.rows = 8;
 		notesInput.style.width = "100%";
 		notesInput.style.resize = "vertical";
 
