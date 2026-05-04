@@ -14,9 +14,8 @@ export class EntryModal extends o.Modal {
 	}
 
 	onOpen() {
+		this.titleEl.setText(this.date);
 		const { contentEl } = this;
-		const heading = contentEl.createEl("h2", { text: this.date });
-		heading.style.marginTop = "0";
 
 		let selectedMood: number | undefined = this.existing?.mood;
 
@@ -25,7 +24,6 @@ export class EntryModal extends o.Modal {
 		moodRow.style.display = "flex";
 		moodRow.style.flexDirection = "column";
 		moodRow.style.gap = "8px";
-		moodRow.createEl("label", { text: "Mood" });
 
 		const swatchRow = moodRow.createEl("div");
 		swatchRow.style.display = "flex";
@@ -73,7 +71,6 @@ export class EntryModal extends o.Modal {
 		notesRow.style.display = "flex";
 		notesRow.style.flexDirection = "column";
 		notesRow.style.gap = "4px";
-		notesRow.createEl("label", { text: "Notes" });
 		const notesInput = notesRow.createEl("textarea");
 		notesInput.value = this.existing?.notes ?? "";
 		notesInput.rows = 12;
